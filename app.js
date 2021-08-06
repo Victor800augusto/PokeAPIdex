@@ -24,11 +24,12 @@ const fetchPokemon = async (url) => {
 };
 
 function populatePokemon(namePokemon, imgPokemon) {
-  html = `<div class="itemPokemon">
-  <img src="${imgPokemon}" class="imgPokemon"></img>
- <h3>${titleCase(namePokemon)}</h3>
- </div>`;
-  container.innerHTML = html;
+  let div = document.createElement("div");
+  div.classList.add("itemPokemon");
+  html = `<img src="${imgPokemon}" class="imgPokemon"></img>
+  <h3>${titleCase(namePokemon)}</h3>`;
+  container.append(div);
+  div.innerHTML = html;
 }
 
 function titleCase(string) {
@@ -67,11 +68,7 @@ function getPokemon(data) {
     }
   });
 
-  // const namePokemon = "bulbasaur";
-  // const imgPokemon =
-  //   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png";
-
-  // populatePokemon(namePokemon, imgPokemon);
+  //   container.innerHTML = list.join("");
 }
 
 // function populatePokemon(data) {
