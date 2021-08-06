@@ -36,18 +36,13 @@ function titleCase(string) {
   return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
 
-function logTest(test) {
-  console.log(test);
-}
-
-async function getDataPokemon(item, listPokemon) {
+async function getDataPokemon(item) {
   try {
     const response = await fetch(item);
     const itemApi = await response.json();
     const sprites = itemApi.sprites;
     const { front_default: imgPokemon } = sprites;
     const namePokemon = itemApi.name;
-    // logTest(namePokemon);
     populatePokemon(namePokemon, imgPokemon);
   } catch (error) {
     console.log(error);
@@ -60,66 +55,21 @@ function getPokemon(data) {
   const listPokemon = results.map((item) => {
     const { url } = item;
     if (url.length < 40) {
-      // console.log(item);
       let { next: nextUrl } = data;
       let { previous: prevUrl } = data;
       setPrevNext(prevUrl, nextUrl);
       getDataPokemon(url);
     }
   });
-
-  //   container.innerHTML = list.join("");
 }
-
-// function populatePokemon(data) {
-//   const { results } = data;
-
-//   const list = results.map((item) => {
-//     let { url: urlString } = item;
-
-//     if (urlString.length < 40) {
-//       let { next: nextUrl } = data;
-//       let { previous: prevUrl } = data;
-//       setPrevNext(prevUrl, nextUrl);
-
-//       let getImgPokemon = () => {
-//         return fetch(urlString)
-//           .then((res) => res.json())
-//           .then((singlePokemon) => singlePokemon.sprites)
-//           .then((spritePokemon) => {
-//             ({ front_default: getImgPokemon } = spritePokemon);
-//             return getImgPokemon;
-//           })
-//           .then((getImgPokemon) => {
-//             // console.log(imgPokemon);
-//             return getImgPokemon;
-//           });
-//       };
-//       // imgPokemon();
-//       console.log(getImgPokemon());
-//       const img = getImgPokemon();
-//       return `<div class="singlePokemon">
-//       <h3>${item.name}</h3>
-//       <img src="${img}"></img>
-//       </div>`;
-//       // return `<div class="singlePokemon">
-//       // <h3>${item.name}</h3>
-//       // <img src="${img}"></img>
-//       // </div>`;
-//     } else {
-//       let nextUrl = "";
-//       let { previous: prevUrl } = data;
-//       setPrevNext(prevUrl, nextUrl);
-//     }
-//   });
-//   console.log();
-//   // const list = results.map((item) => `<h3>${item.name}</h3>`);
-//   container.innerHTML = list.join("");
-// }
+function clearLastPokemonBatch() {
+  container.innerHTML = "";
+}
 
 const nextPage = () => {
   console.log(nextUrl);
   if (nextUrl) {
+    clearLastPokemonBatch();
     fetchPokemon(nextUrl);
   } else {
     return;
@@ -128,6 +78,7 @@ const nextPage = () => {
 const previousPage = () => {
   console.log(prevUrl);
   if (prevUrl) {
+    clearLastPokemonBatch();
     fetchPokemon(prevUrl);
   } else {
     return;
