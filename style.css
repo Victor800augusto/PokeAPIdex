@@ -33,7 +33,8 @@ h2 {
   font-size: 2rem;
 }
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: normal;
 }
 h4 {
   font-size: 0.875rem;
@@ -42,36 +43,19 @@ p {
   margin-bottom: 1.25rem;
   color: #202124;
 }
-@media screen and (min-width: 800px) {
-  h1 {
-    font-size: 3rem;
-  }
-  h2 {
-    font-size: 2.5rem;
-  }
-  h3 {
-    font-size: 1.75rem;
-  }
-  h4 {
-    font-size: 1rem;
-  }
-  body {
-    font-size: 1rem;
-  }
-  h1,
-  h2,
-  h3,
-  h4 {
-    line-height: 1;
-  }
-}
 
 /* Styles */
+
+.containerPokemon {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
 
 #container {
   display: flex;
   justify-content: center;
-  padding: 50px;
+  padding: 50px 50px 25px 50px;
   margin: 0 auto;
   flex-wrap: wrap;
   gap: 5px;
@@ -79,7 +63,17 @@ p {
 }
 
 button {
-  padding: 5px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 2px solid #202124;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #fff;
+  margin: 0 5px;
+}
+button:enabled:hover {
+  cursor: pointer;
+  background-color: #bfbfbf;
 }
 
 body {
@@ -91,18 +85,22 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  border-radius: 5%;
+  border: 2px solid #f2f2f2;
+  height: 100px;
+  min-width: 293.5px;
 }
-
+.itemPokemon h3 {
+  margin: 0 auto;
+}
 .imgPokemon {
   background: #f2f2f2;
   border-radius: 5%;
-  margin-right: 25px;
 }
 
 footer {
   background: #1f1f1f;
   padding: 30px 60px;
-  margin-top: 20px;
 }
 
 footer h3 {
