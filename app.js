@@ -8,6 +8,8 @@ const btnPrevious = document.getElementById("btnPrev");
 
 const container = document.querySelector("#container");
 
+let isLastItem = false;
+
 const init = async () => {
   await fetchPokemon(apiUrl);
   btnNext.addEventListener("click", nextPage);
@@ -54,7 +56,6 @@ function getPokemon(data) {
   const { results } = data;
   const listPokemon = results.map(async (item, index) => {
     const { url } = item;
-
     if (url.length < 40) {
       let { next: nextUrl } = data;
       let { previous: prevUrl } = data;
@@ -62,21 +63,25 @@ function getPokemon(data) {
       await getDataPokemon(url);
       if (results.length == index + 1) {
         btnNext.removeAttribute("disabled");
+        btnPrevious.removeAttribute("disabled");
       }
+    } else {
+      let nextUrl = "";
+      let { previous: prevUrl } = data;
+      setPrevNext(prevUrl, nextUrl);
+    }
+    if (data.previous == null) {
+      btnPrevious.setAttribute("disabled", "disabled");
     }
   });
 }
 function clearLastPokemonBatch() {
-  // const imgPokemon = document.querySelector("imgPokemon");
-  // console.log(imgPokemon);
   container.innerHTML = "";
 }
 
 const nextPage = () => {
   if (nextUrl) {
-    console.log(nextUrl);
     btnNext.setAttribute("disabled", "disabled");
-
     document.documentElement.scrollTop = 0;
     clearLastPokemonBatch();
     fetchPokemon(nextUrl);
@@ -87,7 +92,6 @@ const nextPage = () => {
 };
 const previousPage = () => {
   if (prevUrl) {
-    console.log(prevUrl);
     btnPrevious.setAttribute("disabled", "disabled");
     document.documentElement.scrollTop = 0;
     clearLastPokemonBatch();
