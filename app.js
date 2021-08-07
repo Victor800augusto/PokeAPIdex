@@ -1,4 +1,5 @@
-const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
+// const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
+const apiUrl = "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0";
 let prevUrl = "";
 let nextUrl = "";
 
@@ -26,7 +27,7 @@ const fetchPokemon = async (url) => {
 function populatePokemon(namePokemon, imgPokemon) {
   let div = document.createElement("div");
   div.classList.add("itemPokemon");
-  html = `<img src="${imgPokemon}" class="imgPokemon"></img>
+  html = `<img src="${imgPokemon}" class="imgPokemon" alt="Imagem do pokemon ${namePokemon}"></img>
   <h3>${titleCase(namePokemon)}</h3>`;
   container.append(div);
   div.innerHTML = html;
@@ -51,33 +52,44 @@ async function getDataPokemon(item) {
 
 function getPokemon(data) {
   const { results } = data;
-  console.log(results);
-  const listPokemon = results.map((item) => {
+  const listPokemon = results.map(async (item, index) => {
     const { url } = item;
+
     if (url.length < 40) {
       let { next: nextUrl } = data;
       let { previous: prevUrl } = data;
       setPrevNext(prevUrl, nextUrl);
-      getDataPokemon(url);
+      await getDataPokemon(url);
+      if (results.length == index + 1) {
+        btnNext.removeAttribute("disabled");
+      }
     }
   });
 }
 function clearLastPokemonBatch() {
+  // const imgPokemon = document.querySelector("imgPokemon");
+  // console.log(imgPokemon);
   container.innerHTML = "";
 }
 
 const nextPage = () => {
-  console.log(nextUrl);
   if (nextUrl) {
+    console.log(nextUrl);
+    btnNext.setAttribute("disabled", "disabled");
+
+    document.documentElement.scrollTop = 0;
     clearLastPokemonBatch();
     fetchPokemon(nextUrl);
+    btnNext;
   } else {
     return;
   }
 };
 const previousPage = () => {
-  console.log(prevUrl);
   if (prevUrl) {
+    console.log(prevUrl);
+    btnPrevious.setAttribute("disabled", "disabled");
+    document.documentElement.scrollTop = 0;
     clearLastPokemonBatch();
     fetchPokemon(prevUrl);
   } else {

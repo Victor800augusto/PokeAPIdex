@@ -70,11 +70,12 @@ p {
 
 #container {
   display: flex;
-  text-align: center;
+  justify-content: center;
   padding: 50px;
   margin: 0 auto;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 5px;
+  min-height: 800px;
 }
 
 button {
@@ -86,6 +87,7 @@ body {
 }
 
 .itemPokemon {
+  flex-basis: calc(33% - 10px);
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -95,4 +97,14 @@ body {
   background: #f2f2f2;
   border-radius: 5%;
   margin-right: 25px;
+}
+
+footer {
+  background: #1f1f1f;
+  padding: 30px 60px;
+  margin-top: 20px;
+}
+
+footer h3 {
+  color: #fff;
 }
