@@ -11,6 +11,7 @@ const container = document.querySelector("#container");
 let isLastItem = false;
 
 const init = async () => {
+  btnPrevious.setAttribute("disabled", "disabled");
   await fetchPokemon(apiUrl);
   btnNext.addEventListener("click", nextPage);
   btnPrevious.addEventListener("click", previousPage);
