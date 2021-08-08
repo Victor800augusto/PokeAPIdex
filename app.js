@@ -27,13 +27,31 @@ const fetchPokemon = async (url) => {
   }
 };
 
-function populatePokemon(namePokemon, imgPokemon) {
+function populatePokemon(namePokemon, imgPokemon, typePokemon) {
+  // console.log(typePokemon);
   let div = document.createElement("div");
   div.classList.add("itemPokemon");
   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Imagem do pokemon ${namePokemon}"></img>
-  <h3>${titleCase(namePokemon)}</h3>`;
+  <div class="containerPokemonData">
+  <h3>${titleCase(namePokemon)}</h3>
+  <div class="containerTypePokemon">
+  
+  </div>
+  </div>`;
   container.append(div);
   div.innerHTML = html;
+
+  const pokemonEntry = div.childNodes[2].childNodes[3];
+
+  const listTypePokemon = typePokemon.map((item) => {
+    const { type } = item;
+    const { name } = type;
+    let span = document.createElement("span");
+    span.classList.add(`${name}`);
+    span.classList.add("typePokemon");
+    span.innerHTML = `${titleCase(name)}`;
+    pokemonEntry.append(span);
+  });
 }
 
 function titleCase(string) {
@@ -46,8 +64,10 @@ async function getDataPokemon(item) {
     const itemApi = await response.json();
     const sprites = itemApi.sprites;
     const { front_default: imgPokemon } = sprites;
-    const namePokemon = itemApi.name;
-    populatePokemon(namePokemon, imgPokemon);
+    const species = itemApi.species;
+    const { name: namePokemon } = species;
+    const typePokemon = itemApi.types;
+    populatePokemon(namePokemon, imgPokemon, typePokemon);
   } catch (error) {
     console.log(error);
   }
