@@ -1,7 +1,8 @@
-// const apiUrl = "https://pokeapi.co/api/v2/pokemon/";
 const apiUrl = "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0";
 let prevUrl = "";
 let nextUrl = "";
+let isNextLimit;
+let isPrevLimit;
 
 const btnNext = document.getElementById("btnNext");
 const btnPrevious = document.getElementById("btnPrev");
@@ -27,10 +28,11 @@ const fetchPokemon = async (url) => {
   }
 };
 
-function populatePokemon(namePokemon, imgPokemon, typePokemon) {
-  // console.log(typePokemon);
-  let div = document.createElement("div");
-  div.classList.add("itemPokemon");
+function populatePokemon(namePokemon, imgPokemon, typePokemon, id) {
+  // let div = document.createElement("div");
+  // div.classList.add("itemPokemon");
+  let divPokemon = document.querySelector(`.${namePokemon}`);
+  // let divPokemon = document.querySelector(`.itemPokemon:nth-child(${index})`);
   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Imagem do pokemon ${namePokemon}"></img>
   <div class="containerPokemonData">
   <h3>${titleCase(namePokemon)}</h3>
@@ -38,10 +40,10 @@ function populatePokemon(namePokemon, imgPokemon, typePokemon) {
   
   </div>
   </div>`;
-  container.append(div);
-  div.innerHTML = html;
+  container.append(divPokemon);
+  divPokemon.innerHTML = html;
 
-  const pokemonEntry = div.childNodes[2].childNodes[3];
+  const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
 
   const listTypePokemon = typePokemon.map((item) => {
     const { type } = item;
@@ -67,32 +69,64 @@ async function getDataPokemon(item) {
     const species = itemApi.species;
     const { name: namePokemon } = species;
     const typePokemon = itemApi.types;
-    populatePokemon(namePokemon, imgPokemon, typePokemon);
+    const id = itemApi.id;
+    // populatePokemon(namePokemon, imgPokemon, typePokemon, id);
   } catch (error) {
     console.log(error);
   }
 }
 
-function getPokemon(data) {
-  const { results } = data;
-  const listPokemon = results.map(async (item, index) => {
+function preRenderCards(Pokemon) {
+  let quantityCards = 0;
+
+  while (quantityCards < Pokemon.length) {
+    const namePokemon = Pokemon[quantityCards].name;
+    let div = document.createElement("div");
+    div.classList.add("itemPokemon");
+    div.classList.add(namePokemon);
+    container.append(div);
+    quantityCards = quantityCards + 1;
+  }
+}
+
+function filterResults(results) {
+  let filteredResults = results.filter((item) => {
     const { url } = item;
     if (url.length < 40) {
+      return url;
+    }
+  });
+  return filteredResults;
+}
+
+function getPokemon(data) {
+  const { results } = data;
+
+  const filteredResults = filterResults(results);
+  preRenderCards(filteredResults);
+
+  const listPokemon = filteredResults.map(async (item, index) => {
+    const { url } = item;
+
+    if (index + 1 == filteredResults.length) {
       let { next: nextUrl } = data;
       let { previous: prevUrl } = data;
-      setPrevNext(prevUrl, nextUrl);
-      await getDataPokemon(url);
-      if (results.length == index + 1) {
-        btnNext.removeAttribute("disabled");
-        btnPrevious.removeAttribute("disabled");
+      isNextLimit = await checkPageLimit(nextUrl);
+      if (!isNextLimit) {
+        nextUrl = "";
+        btnNext.setAttribute("disabled", "disabled");
+      } else {
+        setPrevNext(prevUrl, nextUrl);
       }
-    } else {
-      let nextUrl = "";
-      let { previous: prevUrl } = data;
-      setPrevNext(prevUrl, nextUrl);
     }
+
+    await getDataPokemon(url);
     if (data.previous == null) {
+      isPrevLimit = true;
       btnPrevious.setAttribute("disabled", "disabled");
+    } else {
+      isPrevLimit = false;
+      buttonTimer();
     }
   });
 }
@@ -100,20 +134,34 @@ function clearLastPokemonBatch() {
   container.innerHTML = "";
 }
 
+function buttonTimer() {
+  setTimeout(() => {
+    if (isNextLimit) {
+      btnNext.removeAttribute("disabled");
+    }
+    if (!isPrevLimit) {
+      btnPrevious.removeAttribute("disabled");
+    }
+  }, 600);
+}
+
 const nextPage = () => {
   if (nextUrl) {
     btnNext.setAttribute("disabled", "disabled");
+    btnPrevious.setAttribute("disabled", "disabled");
+    buttonTimer();
     document.documentElement.scrollTop = 0;
     clearLastPokemonBatch();
     fetchPokemon(nextUrl);
-    btnNext;
   } else {
     return;
   }
 };
 const previousPage = () => {
   if (prevUrl) {
+    btnNext.setAttribute("disabled", "disabled");
     btnPrevious.setAttribute("disabled", "disabled");
+    buttonTimer();
     document.documentElement.scrollTop = 0;
     clearLastPokemonBatch();
     fetchPokemon(prevUrl);
@@ -125,6 +173,24 @@ const previousPage = () => {
 function setPrevNext(previous, next) {
   nextUrl = next;
   prevUrl = previous;
+}
+
+const fetchCheckPokemon = async (url) => {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data.results[0].url.length < 40) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+async function checkPageLimit(nextUrl) {
+  const hasMorePages = await fetchCheckPokemon(nextUrl);
+  return hasMorePages;
 }
 
 window.addEventListener("load", init());
