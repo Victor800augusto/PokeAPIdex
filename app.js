@@ -22,7 +22,7 @@ const fetchPokemon = async (url) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    getPokemon(data);
+    getArrayPokemon(data);
   } catch (error) {
     console.log(error);
   }
@@ -33,7 +33,7 @@ function populatePokemon(namePokemon, imgPokemon, typePokemon, id) {
   // div.classList.add("itemPokemon");
   let divPokemon = document.querySelector(`.${namePokemon}`);
   // let divPokemon = document.querySelector(`.itemPokemon:nth-child(${index})`);
-  html = `<img src="${imgPokemon}" class="imgPokemon" alt="Imagem do pokemon ${namePokemon}"></img>
+  html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of pokemon ${namePokemon}"></img>
   <div class="containerPokemonData">
   <h3>${titleCase(namePokemon)}</h3>
   <div class="containerTypePokemon">
@@ -70,6 +70,8 @@ async function getDataPokemon(item) {
     const { name: namePokemon } = species;
     const typePokemon = itemApi.types;
     const id = itemApi.id;
+    pokemon = { id: id, name: namePokemon, type: typePokemon, img: imgPokemon };
+    return pokemon;
     // populatePokemon(namePokemon, imgPokemon, typePokemon, id);
   } catch (error) {
     console.log(error);
@@ -99,37 +101,73 @@ function filterResults(results) {
   return filteredResults;
 }
 
-function getPokemon(data) {
+function sortPokemon(arrayPokemon) {
+  arrayPokemon.sort((a, b) => {
+    if (a.id > b.id) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  return arrayPokemon;
+}
+
+// function checkLastPokemon(){
+//   if (index + 1 == filteredResults.length) {
+//     let { next: nextUrl } = data;
+//     let { previous: prevUrl } = data;
+//     isNextLimit = await checkPageLimit(nextUrl);
+//     if (!isNextLimit) {
+//       nextUrl = "";
+//       setPrevNext(prevUrl, nextUrl);
+//       btnNext.setAttribute("disabled", "disabled");
+//     } else {
+//       setPrevNext(prevUrl, nextUrl);
+//     }
+//   }
+// }
+
+function getArrayPokemon(data) {
   const { results } = data;
 
   const filteredResults = filterResults(results);
   preRenderCards(filteredResults);
+  let arrayPokemon = [];
 
   const listPokemon = filteredResults.map(async (item, index) => {
     const { url } = item;
-
+    //
     if (index + 1 == filteredResults.length) {
       let { next: nextUrl } = data;
       let { previous: prevUrl } = data;
       isNextLimit = await checkPageLimit(nextUrl);
       if (!isNextLimit) {
         nextUrl = "";
+        setPrevNext(prevUrl, nextUrl);
         btnNext.setAttribute("disabled", "disabled");
       } else {
         setPrevNext(prevUrl, nextUrl);
       }
     }
-
-    await getDataPokemon(url);
+    //
+    const itemPokemon = await getDataPokemon(url);
     if (data.previous == null) {
       isPrevLimit = true;
       btnPrevious.setAttribute("disabled", "disabled");
     } else {
       isPrevLimit = false;
-      buttonTimer();
     }
+    arrayPokemon.push(itemPokemon);
+    // console.log(arrayPokemon);
   });
+
+  // console.log(arrayPokemon);
+  // console.log(arrayPokemon[1]);
+  // buttonTimer();
+  const sortedPokemon = sortPokemon(arrayPokemon);
+  console.log(sortedPokemon);
 }
+
 function clearLastPokemonBatch() {
   container.innerHTML = "";
 }
