@@ -112,60 +112,53 @@ function sortPokemon(arrayPokemon) {
   return arrayPokemon;
 }
 
-// function checkLastPokemon(){
-//   if (index + 1 == filteredResults.length) {
-//     let { next: nextUrl } = data;
-//     let { previous: prevUrl } = data;
-//     isNextLimit = await checkPageLimit(nextUrl);
-//     if (!isNextLimit) {
-//       nextUrl = "";
-//       setPrevNext(prevUrl, nextUrl);
-//       btnNext.setAttribute("disabled", "disabled");
-//     } else {
-//       setPrevNext(prevUrl, nextUrl);
-//     }
-//   }
-// }
+async function checkLastPokemon(index, filteredResults, data) {
+  if (index + 1 == filteredResults.length) {
+    let { next: nextUrl } = data;
+    let { previous: prevUrl } = data;
+    isNextLimit = await checkPageLimit(nextUrl);
+    if (!isNextLimit) {
+      nextUrl = "";
+      setPrevNext(prevUrl, nextUrl);
+      btnNext.setAttribute("disabled", "disabled");
+    } else {
+      setPrevNext(prevUrl, nextUrl);
+    }
+  }
+}
 
-function getArrayPokemon(data) {
+function checkPreviousPage(data) {
+  if (data.previous == null) {
+    isPrevLimit = true;
+    btnPrevious.setAttribute("disabled", "disabled");
+  } else {
+    isPrevLimit = false;
+  }
+}
+
+async function orderPokemon(filteredResults, data) {
+  let arrayPokemon = [];
+  await filteredResults.map(async (item, index) => {
+    const { url } = item;
+    await checkLastPokemon(index, filteredResults, data);
+    const itemPokemon = await getDataPokemon(url);
+    checkPreviousPage(data);
+    arrayPokemon.push(itemPokemon);
+  });
+  console.log(arrayPokemon);
+  return arrayPokemon;
+}
+
+async function getArrayPokemon(data) {
   const { results } = data;
 
-  const filteredResults = filterResults(results);
+  const filteredResults = await filterResults(results);
   preRenderCards(filteredResults);
-  let arrayPokemon = [];
 
-  const listPokemon = filteredResults.map(async (item, index) => {
-    const { url } = item;
-    //
-    if (index + 1 == filteredResults.length) {
-      let { next: nextUrl } = data;
-      let { previous: prevUrl } = data;
-      isNextLimit = await checkPageLimit(nextUrl);
-      if (!isNextLimit) {
-        nextUrl = "";
-        setPrevNext(prevUrl, nextUrl);
-        btnNext.setAttribute("disabled", "disabled");
-      } else {
-        setPrevNext(prevUrl, nextUrl);
-      }
-    }
-    //
-    const itemPokemon = await getDataPokemon(url);
-    if (data.previous == null) {
-      isPrevLimit = true;
-      btnPrevious.setAttribute("disabled", "disabled");
-    } else {
-      isPrevLimit = false;
-    }
-    arrayPokemon.push(itemPokemon);
-    // console.log(arrayPokemon);
-  });
+  const listPokemon = await orderPokemon(filteredResults, data);
 
-  // console.log(arrayPokemon);
-  // console.log(arrayPokemon[1]);
-  // buttonTimer();
-  const sortedPokemon = sortPokemon(arrayPokemon);
-  console.log(sortedPokemon);
+  const sortedPokemon = sortPokemon(listPokemon);
+  // console.log(sortedPokemon);
 }
 
 function clearLastPokemonBatch() {
