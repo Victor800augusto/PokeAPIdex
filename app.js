@@ -40,8 +40,9 @@ function listTypePokemon(typePokemon, pokemonEntry) {
 }
 
 function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
-  html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of pokemon ${namePokemon}"></img>
+  html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of the pokemon ${namePokemon}"></img>
    <div class="containerPokemonData">
+   <span class="idPokemon">${id}</span>
    <h3>${titleCase(namePokemon)}</h3>
    <div class="containerTypePokemon">
 
@@ -49,7 +50,8 @@ function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
    </div>`;
   container.append(divPokemon);
   divPokemon.innerHTML = html;
-  const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
+
+  const pokemonEntry = divPokemon.childNodes[2].childNodes[5];
   listTypePokemon(typePokemon, pokemonEntry);
 }
 
@@ -59,7 +61,6 @@ function populatePokemon(sortedPokemon) {
     const imgPokemon = sortedPokemon[i].img;
     const typePokemon = sortedPokemon[i].type;
     const id = sortedPokemon[i].id;
-    console.log(id);
     // let divPokemon = document.querySelector(`.${id}`);
     let divPokemon = document.getElementById(`${id}`);
     htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon);

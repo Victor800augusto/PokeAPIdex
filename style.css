@@ -96,6 +96,15 @@ body {
 .itemPokemon h3 {
   margin: 0 auto;
 }
+
+.idPokemon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-weight: 600;
+  color: black;
+}
+
 .imgPokemon {
   background: #f2f2f2;
   border-radius: 5%;
@@ -107,6 +116,7 @@ body {
   flex-basis: 100%;
   justify-content: center;
   height: 100%;
+  position: relative;
 }
 
 .containerTypePokemon {
@@ -122,6 +132,16 @@ body {
   display: inline-block;
   padding: 2px 15px;
   border-radius: 5px;
+}
+
+@media (min-width: 1250px) {
+  .idPokemon {
+    position: absolute;
+    top: 12px;
+    left: 30px;
+    font-weight: 600;
+    color: black;
+  }
 }
 
 /* TypeStyles */
