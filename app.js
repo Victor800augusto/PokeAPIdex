@@ -111,19 +111,17 @@ function sortPokemon(arrayPokemon) {
   });
   return arrayPokemon;
 }
-
-async function checkLastPokemon(index, filteredResults, data) {
-  if (index + 1 == filteredResults.length) {
-    let { next: nextUrl } = data;
-    let { previous: prevUrl } = data;
-    isNextLimit = await checkPageLimit(nextUrl);
-    if (!isNextLimit) {
-      nextUrl = "";
-      setPrevNext(prevUrl, nextUrl);
-      btnNext.setAttribute("disabled", "disabled");
-    } else {
-      setPrevNext(prevUrl, nextUrl);
-    }
+//
+async function checkLastPokemon(data) {
+  let { next: nextUrl } = data;
+  let { previous: prevUrl } = data;
+  isNextLimit = await checkPageLimit(nextUrl);
+  if (!isNextLimit) {
+    nextUrl = "";
+    setPrevNext(prevUrl, nextUrl);
+    btnNext.setAttribute("disabled", "disabled");
+  } else {
+    setPrevNext(prevUrl, nextUrl);
   }
 }
 
@@ -138,14 +136,25 @@ function checkPreviousPage(data) {
 
 async function orderPokemon(filteredResults, data) {
   let arrayPokemon = [];
-  await filteredResults.map(async (item, index) => {
-    const { url } = item;
-    await checkLastPokemon(index, filteredResults, data);
+
+  for (let i = 0; i < filteredResults.length; i++) {
+    let url = filteredResults[i].url;
     const itemPokemon = await getDataPokemon(url);
     checkPreviousPage(data);
     arrayPokemon.push(itemPokemon);
-  });
-  console.log(arrayPokemon);
+    if (i == filteredResults.length - 1) {
+      await checkLastPokemon(data);
+    }
+  }
+  //
+  // const list = await filteredResults.map(async (item, index) => {
+  //   const { url } = item;
+  //   await checkLastPokemon(index, filteredResults, data);
+  //   const itemPokemon = await getDataPokemon(url);
+  //   checkPreviousPage(data);
+  //   arrayPokemon.push(itemPokemon);
+  // });
+  //
   return arrayPokemon;
 }
 
