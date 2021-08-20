@@ -28,7 +28,18 @@ const fetchPokemon = async (url) => {
   }
 };
 
-function htmlPokemon(namePokemon, imgPokemon, typePokemon, id) {
+function listTypePokemon(typePokemon, pokemonEntry) {
+  for (i = 0; i < typePokemon.length; i++) {
+    const name = typePokemon[i].type.name;
+    let span = document.createElement("span");
+    span.classList.add(`${name}`);
+    span.classList.add("typePokemon");
+    span.innerHTML = `${titleCase(name)}`;
+    pokemonEntry.append(span);
+  }
+}
+
+function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of pokemon ${namePokemon}"></img>
    <div class="containerPokemonData">
    <h3>${titleCase(namePokemon)}</h3>
@@ -36,66 +47,23 @@ function htmlPokemon(namePokemon, imgPokemon, typePokemon, id) {
 
    </div>
    </div>`;
-  return html;
+  container.append(divPokemon);
+  divPokemon.innerHTML = html;
+  const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
+  listTypePokemon(typePokemon, pokemonEntry);
 }
 
 function populatePokemon(sortedPokemon) {
-  //
   for (let i = 0; i < sortedPokemon.length; i++) {
     const namePokemon = sortedPokemon[i].name;
     const imgPokemon = sortedPokemon[i].img;
     const typePokemon = sortedPokemon[i].type;
     const id = sortedPokemon[i].id;
     let divPokemon = document.querySelector(`.${namePokemon}`);
-    const html = htmlPokemon(namePokemon, imgPokemon, typePokemon, id);
-    container.append(divPokemon);
-    divPokemon.innerHTML = html;
-    const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
+    htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon);
   }
-  //
-  //
-
-  // const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
-
-  // const listTypePokemon = typePokemon.map((item) => {
-  //   const { type } = item;
-  //   const { name } = type;
-  //   let span = document.createElement("span");
-  //   span.classList.add(`${name}`);
-  //   span.classList.add("typePokemon");
-  //   span.innerHTML = `${titleCase(name)}`;
-  //   pokemonEntry.append(span);
-  // });
-  //
 }
-//
-// function populatePokemon(namePokemon, imgPokemon, typePokemon, id) {
-//   //
-//   //
-//   let divPokemon = document.querySelector(`.${namePokemon}`);
-//   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of pokemon ${namePokemon}"></img>
-//   <div class="containerPokemonData">
-//   <h3>${titleCase(namePokemon)}</h3>
-//   <div class="containerTypePokemon">
 
-//   </div>
-//   </div>`;
-//   container.append(divPokemon);
-//   divPokemon.innerHTML = html;
-
-//   const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
-
-//   const listTypePokemon = typePokemon.map((item) => {
-//     const { type } = item;
-//     const { name } = type;
-//     let span = document.createElement("span");
-//     span.classList.add(`${name}`);
-//     span.classList.add("typePokemon");
-//     span.innerHTML = `${titleCase(name)}`;
-//     pokemonEntry.append(span);
-//   });
-// }
-//
 function titleCase(string) {
   return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
