@@ -28,34 +28,74 @@ const fetchPokemon = async (url) => {
   }
 };
 
-function populatePokemon(namePokemon, imgPokemon, typePokemon, id) {
-  // let div = document.createElement("div");
-  // div.classList.add("itemPokemon");
-  let divPokemon = document.querySelector(`.${namePokemon}`);
-  // let divPokemon = document.querySelector(`.itemPokemon:nth-child(${index})`);
+function htmlPokemon(namePokemon, imgPokemon, typePokemon, id) {
   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of pokemon ${namePokemon}"></img>
-  <div class="containerPokemonData">
-  <h3>${titleCase(namePokemon)}</h3>
-  <div class="containerTypePokemon">
-  
-  </div>
-  </div>`;
-  container.append(divPokemon);
-  divPokemon.innerHTML = html;
+   <div class="containerPokemonData">
+   <h3>${titleCase(namePokemon)}</h3>
+   <div class="containerTypePokemon">
 
-  const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
-
-  const listTypePokemon = typePokemon.map((item) => {
-    const { type } = item;
-    const { name } = type;
-    let span = document.createElement("span");
-    span.classList.add(`${name}`);
-    span.classList.add("typePokemon");
-    span.innerHTML = `${titleCase(name)}`;
-    pokemonEntry.append(span);
-  });
+   </div>
+   </div>`;
+  return html;
 }
 
+function populatePokemon(sortedPokemon) {
+  //
+  for (let i = 0; i < sortedPokemon.length; i++) {
+    const namePokemon = sortedPokemon[i].name;
+    const imgPokemon = sortedPokemon[i].img;
+    const typePokemon = sortedPokemon[i].type;
+    const id = sortedPokemon[i].id;
+    let divPokemon = document.querySelector(`.${namePokemon}`);
+    const html = htmlPokemon(namePokemon, imgPokemon, typePokemon, id);
+    container.append(divPokemon);
+    divPokemon.innerHTML = html;
+    const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
+  }
+  //
+  //
+
+  // const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
+
+  // const listTypePokemon = typePokemon.map((item) => {
+  //   const { type } = item;
+  //   const { name } = type;
+  //   let span = document.createElement("span");
+  //   span.classList.add(`${name}`);
+  //   span.classList.add("typePokemon");
+  //   span.innerHTML = `${titleCase(name)}`;
+  //   pokemonEntry.append(span);
+  // });
+  //
+}
+//
+// function populatePokemon(namePokemon, imgPokemon, typePokemon, id) {
+//   //
+//   //
+//   let divPokemon = document.querySelector(`.${namePokemon}`);
+//   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of pokemon ${namePokemon}"></img>
+//   <div class="containerPokemonData">
+//   <h3>${titleCase(namePokemon)}</h3>
+//   <div class="containerTypePokemon">
+
+//   </div>
+//   </div>`;
+//   container.append(divPokemon);
+//   divPokemon.innerHTML = html;
+
+//   const pokemonEntry = divPokemon.childNodes[2].childNodes[3];
+
+//   const listTypePokemon = typePokemon.map((item) => {
+//     const { type } = item;
+//     const { name } = type;
+//     let span = document.createElement("span");
+//     span.classList.add(`${name}`);
+//     span.classList.add("typePokemon");
+//     span.innerHTML = `${titleCase(name)}`;
+//     pokemonEntry.append(span);
+//   });
+// }
+//
 function titleCase(string) {
   return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
@@ -111,7 +151,7 @@ function sortPokemon(arrayPokemon) {
   });
   return arrayPokemon;
 }
-//
+
 async function checkLastPokemon(data) {
   let { next: nextUrl } = data;
   let { previous: prevUrl } = data;
@@ -146,15 +186,6 @@ async function orderPokemon(filteredResults, data) {
       await checkLastPokemon(data);
     }
   }
-  //
-  // const list = await filteredResults.map(async (item, index) => {
-  //   const { url } = item;
-  //   await checkLastPokemon(index, filteredResults, data);
-  //   const itemPokemon = await getDataPokemon(url);
-  //   checkPreviousPage(data);
-  //   arrayPokemon.push(itemPokemon);
-  // });
-  //
   return arrayPokemon;
 }
 
@@ -167,7 +198,7 @@ async function getArrayPokemon(data) {
   const listPokemon = await orderPokemon(filteredResults, data);
 
   const sortedPokemon = sortPokemon(listPokemon);
-  // console.log(sortedPokemon);
+  populatePokemon(sortedPokemon);
 }
 
 function clearLastPokemonBatch() {
@@ -197,6 +228,7 @@ const nextPage = () => {
     return;
   }
 };
+
 const previousPage = () => {
   if (prevUrl) {
     btnNext.setAttribute("disabled", "disabled");
@@ -228,6 +260,7 @@ const fetchCheckPokemon = async (url) => {
     console.log(error);
   }
 };
+
 async function checkPageLimit(nextUrl) {
   const hasMorePages = await fetchCheckPokemon(nextUrl);
   return hasMorePages;
