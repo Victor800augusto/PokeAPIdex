@@ -59,7 +59,9 @@ function populatePokemon(sortedPokemon) {
     const imgPokemon = sortedPokemon[i].img;
     const typePokemon = sortedPokemon[i].type;
     const id = sortedPokemon[i].id;
-    let divPokemon = document.querySelector(`.${namePokemon}`);
+    console.log(id);
+    // let divPokemon = document.querySelector(`.${id}`);
+    let divPokemon = document.getElementById(`${id}`);
     htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon);
   }
 }
@@ -87,15 +89,15 @@ async function getDataPokemon(item) {
 }
 
 function preRenderCards(Pokemon) {
-  let quantityCards = 0;
+  let i = 0;
 
-  while (quantityCards < Pokemon.length) {
-    const namePokemon = Pokemon[quantityCards].name;
+  while (i < Pokemon.length) {
+    const id = Pokemon[i].url.split("/")[6];
     let div = document.createElement("div");
     div.classList.add("itemPokemon");
-    div.classList.add(namePokemon);
+    div.id = id;
     container.append(div);
-    quantityCards = quantityCards + 1;
+    i = i + 1;
   }
 }
 
