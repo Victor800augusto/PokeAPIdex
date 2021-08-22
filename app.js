@@ -40,6 +40,7 @@ function listTypePokemon(typePokemon, pokemonEntry) {
 }
 
 function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
+  // if (divPokemon != null) {
   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of the pokemon ${namePokemon}"></img>
    <div class="containerPokemonData">
    <span class="idPokemon">${id}</span>
@@ -53,6 +54,7 @@ function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
 
   const pokemonEntry = divPokemon.childNodes[2].childNodes[5];
   listTypePokemon(typePokemon, pokemonEntry);
+  // }
 }
 
 function populatePokemon(sortedPokemon) {
@@ -63,7 +65,9 @@ function populatePokemon(sortedPokemon) {
     const id = sortedPokemon[i].id;
     // let divPokemon = document.querySelector(`.${id}`);
     let divPokemon = document.getElementById(`${id}`);
-    htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon);
+    if (divPokemon != null) {
+      htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon);
+    }
   }
 }
 
@@ -83,7 +87,6 @@ async function getDataPokemon(item) {
     const id = itemApi.id;
     pokemon = { id: id, name: namePokemon, type: typePokemon, img: imgPokemon };
     return pokemon;
-    // populatePokemon(namePokemon, imgPokemon, typePokemon, id);
   } catch (error) {
     console.log(error);
   }
@@ -123,7 +126,7 @@ function sortPokemon(arrayPokemon) {
   return arrayPokemon;
 }
 
-async function checkLastPokemon(data) {
+async function checkFirstPokemon(data) {
   let { next: nextUrl } = data;
   let { previous: prevUrl } = data;
   isNextLimit = await checkPageLimit(nextUrl);
@@ -153,9 +156,9 @@ async function orderPokemon(filteredResults, data) {
     const itemPokemon = await getDataPokemon(url);
     checkPreviousPage(data);
     arrayPokemon.push(itemPokemon);
-    if (i == filteredResults.length - 1) {
-      await checkLastPokemon(data);
-    }
+    // if (i == filteredResults.length - 1) {
+    //   await checkFirstPokemon(data);
+    // }
   }
   return arrayPokemon;
 }
@@ -165,7 +168,9 @@ async function getArrayPokemon(data) {
 
   const filteredResults = await filterResults(results);
   preRenderCards(filteredResults);
-
+  //
+  checkFirstPokemon(data);
+  //
   const listPokemon = await orderPokemon(filteredResults, data);
 
   const sortedPokemon = sortPokemon(listPokemon);

@@ -99,15 +99,19 @@ body {
 
 .idPokemon {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 0px;
+  left: 0px;
   font-weight: 600;
   color: black;
+  height: 25px;
+  width: 38px;
+  background-color: paleturquoise;
+  border-bottom-right-radius: 45%;
 }
 
 .imgPokemon {
   background: #f2f2f2;
-  border-radius: 5%;
+  border-radius: 5% 0 0 5%;
 }
 
 .containerPokemonData {
@@ -132,16 +136,6 @@ body {
   display: inline-block;
   padding: 2px 15px;
   border-radius: 5px;
-}
-
-@media (min-width: 1250px) {
-  .idPokemon {
-    position: absolute;
-    top: 12px;
-    left: 30px;
-    font-weight: 600;
-    color: black;
-  }
 }
 
 /* TypeStyles */
