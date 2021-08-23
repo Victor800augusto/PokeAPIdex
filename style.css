@@ -201,7 +201,52 @@ body {
   background-color: #399cff;
 }
 
-/* TypeStyles ending*/
+/* TypeStyles end*/
+
+/* Skeleton Loading styles */
+.itemPokemon.loading {
+  background-color: #f2f2f2;
+}
+.imgContainer.loading {
+  position: relative;
+}
+.imgContainer.loading::before {
+  transform: translate(50%, 50%);
+  position: absolute;
+  content: "";
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  background-color: gray;
+  border-radius: 50%;
+}
+.imgPokemon.loading {
+  vertical-align: middle;
+  height: 96px;
+  min-width: 96px;
+  border: none;
+}
+.containerPokemonData.loading {
+  align-items: center;
+}
+.idPokemon.loading {
+  background-color: grey;
+}
+.namePokemon.loading {
+  margin-top: 10px;
+  height: 20px;
+  width: 150px;
+  background-color: grey;
+  border-radius: 10px;
+}
+.containerTypePokemon.loading {
+  text-align: center;
+  height: 20px;
+  width: 150px;
+  background-color: grey;
+  border-radius: 10px;
+}
+/* Skeleton Loading styles end */
 
 /* Footer */
 footer {

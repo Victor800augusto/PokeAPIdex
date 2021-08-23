@@ -98,9 +98,30 @@ function preRenderCards(Pokemon) {
   while (i < Pokemon.length) {
     const id = Pokemon[i].url.split("/")[6];
     let div = document.createElement("div");
-    div.classList.add("itemPokemon");
+    div.classList.add("itemPokemon", "loading");
     div.id = id;
     container.append(div);
+    //
+    let skeletonImgContainer = document.createElement("figure");
+    skeletonImgContainer.classList.add("imgContainer");
+    let skeletonImg = document.createElement("img", "loading");
+    skeletonImg.classList.add("imgPokemon", "loading");
+    let skeletonData = document.createElement("div");
+    skeletonData.classList.add("containerPokemonData", "loading");
+    let skeletonSpan = document.createElement("span");
+    skeletonSpan.classList.add("idPokemon", "loading");
+    let skeletonName = document.createElement("h3");
+    skeletonName.classList.add("namePokemon", "loading");
+    let skeletonType = document.createElement("div");
+    skeletonType.classList.add("containerTypePokemon", "loading");
+    //
+    div.append(skeletonImgContainer);
+    skeletonImgContainer.append(skeletonImg);
+    div.append(skeletonData);
+    skeletonData.append(skeletonSpan);
+    skeletonData.append(skeletonName);
+    skeletonData.append(skeletonType);
+    //
     i = i + 1;
   }
 }
@@ -169,12 +190,13 @@ async function getArrayPokemon(data) {
   const filteredResults = await filterResults(results);
   preRenderCards(filteredResults);
   //
-  checkFirstPokemon(data);
-  //
-  const listPokemon = await orderPokemon(filteredResults, data);
+  // checkFirstPokemon(data);
 
-  const sortedPokemon = sortPokemon(listPokemon);
-  populatePokemon(sortedPokemon);
+  // const listPokemon = await orderPokemon(filteredResults, data);
+
+  // const sortedPokemon = sortPokemon(listPokemon);
+  // populatePokemon(sortedPokemon);
+  //
 }
 
 function clearLastPokemonBatch() {
