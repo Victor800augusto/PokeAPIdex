@@ -112,12 +112,17 @@ body {
 .imgPokemon {
   background: #f2f2f2;
   border-radius: 5% 0 0 5%;
+  vertical-align: middle;
+  height: 96px;
+  min-width: 96px;
+  border: none;
 }
 
 .containerPokemonData {
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
+  align-items: center;
   justify-content: center;
   height: 100%;
   position: relative;
@@ -203,11 +208,12 @@ body {
 
 /* TypeStyles end*/
 
-/* Skeleton Loading styles */
+/* Skeleton styles */
+
 .itemPokemon.loading {
   background-color: #f2f2f2;
 }
-.imgContainer.loading {
+.imgContainer {
   position: relative;
 }
 .imgContainer.loading::before {
@@ -217,34 +223,41 @@ body {
   display: inline-block;
   height: 50px;
   width: 50px;
-  background-color: gray;
   border-radius: 50%;
 }
-.imgPokemon.loading {
-  vertical-align: middle;
-  height: 96px;
-  min-width: 96px;
-  border: none;
-}
-.containerPokemonData.loading {
-  align-items: center;
-}
-.idPokemon.loading {
-  background-color: grey;
+
+@keyframes skeleton {
+  100% {
+    background-position: -100% 0;
+  }
 }
 .namePokemon.loading {
   margin-top: 10px;
   height: 20px;
   width: 150px;
-  background-color: grey;
   border-radius: 10px;
 }
 .containerTypePokemon.loading {
   text-align: center;
   height: 20px;
   width: 150px;
-  background-color: grey;
   border-radius: 10px;
+}
+
+.imgContainer.loading::before,
+.containerTypePokemon.loading,
+.namePokemon.loading,
+.idPokemon.loading {
+  background: linear-gradient(
+    120deg,
+    #e5e5e5 30%,
+    #f0f0f0 38%,
+    #f0f0f0 40%,
+    #e5e5e5 48%
+  );
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: skeleton 2s infinite;
 }
 /* Skeleton Loading styles end */
 

@@ -49,6 +49,7 @@ function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
 
    </div>
    </div>`;
+  removeSkeleton(divPokemon);
   container.append(divPokemon);
   divPokemon.innerHTML = html;
 
@@ -92,6 +93,31 @@ async function getDataPokemon(item) {
   }
 }
 
+function removeSkeleton(divPokemon) {
+  divPokemon.classList.remove("loading");
+}
+
+function addSkeleton(div) {
+  let skeletonImgContainer = document.createElement("figure");
+  skeletonImgContainer.classList.add("imgContainer", "loading");
+  let skeletonImg = document.createElement("img");
+  skeletonImg.classList.add("imgPokemon", "loading");
+  let skeletonData = document.createElement("div");
+  skeletonData.classList.add("containerPokemonData");
+  let skeletonSpan = document.createElement("span");
+  skeletonSpan.classList.add("idPokemon", "loading");
+  let skeletonName = document.createElement("h3");
+  skeletonName.classList.add("namePokemon", "loading");
+  let skeletonType = document.createElement("div");
+  skeletonType.classList.add("containerTypePokemon", "loading");
+  div.append(skeletonImgContainer);
+  skeletonImgContainer.append(skeletonImg);
+  div.append(skeletonData);
+  skeletonData.append(skeletonSpan);
+  skeletonData.append(skeletonName);
+  skeletonData.append(skeletonType);
+}
+
 function preRenderCards(Pokemon) {
   let i = 0;
 
@@ -101,27 +127,7 @@ function preRenderCards(Pokemon) {
     div.classList.add("itemPokemon", "loading");
     div.id = id;
     container.append(div);
-    //
-    let skeletonImgContainer = document.createElement("figure");
-    skeletonImgContainer.classList.add("imgContainer");
-    let skeletonImg = document.createElement("img", "loading");
-    skeletonImg.classList.add("imgPokemon", "loading");
-    let skeletonData = document.createElement("div");
-    skeletonData.classList.add("containerPokemonData", "loading");
-    let skeletonSpan = document.createElement("span");
-    skeletonSpan.classList.add("idPokemon", "loading");
-    let skeletonName = document.createElement("h3");
-    skeletonName.classList.add("namePokemon", "loading");
-    let skeletonType = document.createElement("div");
-    skeletonType.classList.add("containerTypePokemon", "loading");
-    //
-    div.append(skeletonImgContainer);
-    skeletonImgContainer.append(skeletonImg);
-    div.append(skeletonData);
-    skeletonData.append(skeletonSpan);
-    skeletonData.append(skeletonName);
-    skeletonData.append(skeletonType);
-    //
+    addSkeleton(div);
     i = i + 1;
   }
 }
@@ -190,12 +196,12 @@ async function getArrayPokemon(data) {
   const filteredResults = await filterResults(results);
   preRenderCards(filteredResults);
   //
-  // checkFirstPokemon(data);
+  checkFirstPokemon(data);
 
-  // const listPokemon = await orderPokemon(filteredResults, data);
+  const listPokemon = await orderPokemon(filteredResults, data);
 
-  // const sortedPokemon = sortPokemon(listPokemon);
-  // populatePokemon(sortedPokemon);
+  const sortedPokemon = sortPokemon(listPokemon);
+  populatePokemon(sortedPokemon);
   //
 }
 
