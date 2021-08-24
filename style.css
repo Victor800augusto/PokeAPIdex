@@ -145,64 +145,64 @@ body {
 
 /* TypeStyles */
 
-.grass {
+.grass.typePokemon {
   background-color: #7bce52;
 }
-.poison {
+.poison.typePokemon {
   background-color: #b55aa5;
 }
-.bug {
+.bug.typePokemon {
   background-color: #adbd21;
 }
-.dragon {
+.dragon.typePokemon {
   background-color: #715fc2;
   color: #fff;
 }
-.fairy {
+.fairy.typePokemon {
   background-color: #f7b5f7;
 }
-.fire {
+.fire.typePokemon {
   background-color: #f75231;
   color: #fff;
 }
-.ghost {
+.ghost.typePokemon {
   background-color: #6363b5;
   color: #fff;
 }
-.ground {
+.ground.typePokemon {
   background-color: #b59c58;
 }
-.normal {
+.normal.typePokemon {
   background-color: #7f7b73;
   color: #fff;
 }
-.psychic {
+.psychic.typePokemon {
   background-color: #ff73a5;
 }
-.steel {
+.steel.typePokemon {
   background-color: #adadc6;
 }
-.dark {
+.dark.typePokemon {
   background-color: #63564e;
   color: #fff;
 }
-.electric {
+.electric.typePokemon {
   background-color: #ffc631;
 }
-.fighting {
+.fighting.typePokemon {
   background-color: #a55239;
   color: #fff;
 }
-.flying {
+.flying.typePokemon {
   background-color: #a0b0f5;
 }
-.ice {
+.ice.typePokemon {
   background-color: #5acee7;
 }
-.rock {
+.rock.typePokemon {
   background-color: #bda55a;
 }
-.water {
+.water.typePokemon {
   background-color: #399cff;
 }
 

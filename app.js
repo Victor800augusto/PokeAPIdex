@@ -1,4 +1,92 @@
 const apiUrl = "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0";
+//
+// const apiTest = "https://pokeapi.co/api/v2/pokedex/1";
+// fetchTest(apiTest);
+// async function fetchTest(apiTest) {
+//   try {
+//     const response = await fetch(apiTest);
+//     const data = await response.json();
+//     console.log(data.pokemon_entries[0].pokemon_species);
+//     console.log(data.pokemon_entries.length);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+//
+const typeColors = [
+  {
+    type: "grass",
+    color: "#7bce52",
+  },
+  {
+    type: "poison",
+    color: "#b55aa5",
+  },
+  {
+    type: "bug",
+    color: "#adbd21",
+  },
+  {
+    type: "dragon",
+    color: "#715fc2",
+  },
+  {
+    type: "fairy",
+    color: "#f7b5f7",
+  },
+  {
+    type: "fire",
+    color: "#f75231",
+  },
+  {
+    type: "ghost",
+    color: "#6363b5",
+  },
+  {
+    type: "ground",
+    color: "#b59c58",
+  },
+  {
+    type: "normal",
+    color: "#7f7b73",
+  },
+  {
+    type: "psychic",
+    color: "#ff73a5",
+  },
+  {
+    type: "steel",
+    color: "#adadc6",
+  },
+  {
+    type: "dark",
+    color: "#63564e",
+  },
+  {
+    type: "electric",
+    color: "#ffc631",
+  },
+  {
+    type: "fighting",
+    color: "#a55239",
+  },
+  {
+    type: "flying",
+    color: "#a0b0f5",
+  },
+  {
+    type: "ice",
+    color: "#5acee7",
+  },
+  {
+    type: "rock",
+    color: "#bda55a",
+  },
+  {
+    type: "water",
+    color: "#399cff",
+  },
+];
 let prevUrl = "";
 let nextUrl = "";
 let isNextLimit;
@@ -28,19 +116,35 @@ const fetchPokemon = async (url) => {
   }
 };
 
+function gradientTypePokemon(pokemon, typePokemon) {
+  let colors = [];
+  for (i = 0; i < typePokemon.length; i++) {
+    const name = typePokemon[i].type.name;
+    pokemon.classList.add(`${name}`);
+    let color = typeColors.find((type) => type.type === name);
+    colors.push(color.color);
+  }
+  if (typePokemon.length == 1) {
+    pokemon.style.background = `${colors[0]}85`;
+  } else {
+    pokemon.style.background = `linear-gradient(90deg,${colors[0]}85,${colors[1]}85)`;
+  }
+}
+
 function listTypePokemon(typePokemon, pokemonEntry) {
+  gradientTypePokemon(pokemonEntry.parentElement, typePokemon);
   for (i = 0; i < typePokemon.length; i++) {
     const name = typePokemon[i].type.name;
     let span = document.createElement("span");
     span.classList.add(`${name}`);
     span.classList.add("typePokemon");
     span.innerHTML = `${titleCase(name)}`;
+
     pokemonEntry.append(span);
   }
 }
 
 function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
-  // if (divPokemon != null) {
   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of the pokemon ${namePokemon}"></img>
    <div class="containerPokemonData">
    <span class="idPokemon">${id}</span>
@@ -55,7 +159,6 @@ function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
 
   const pokemonEntry = divPokemon.childNodes[2].childNodes[5];
   listTypePokemon(typePokemon, pokemonEntry);
-  // }
 }
 
 function populatePokemon(sortedPokemon) {
@@ -64,7 +167,6 @@ function populatePokemon(sortedPokemon) {
     const imgPokemon = sortedPokemon[i].img;
     const typePokemon = sortedPokemon[i].type;
     const id = sortedPokemon[i].id;
-    // let divPokemon = document.querySelector(`.${id}`);
     let divPokemon = document.getElementById(`${id}`);
     if (divPokemon != null) {
       htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon);
@@ -183,9 +285,6 @@ async function orderPokemon(filteredResults, data) {
     const itemPokemon = await getDataPokemon(url);
     checkPreviousPage(data);
     arrayPokemon.push(itemPokemon);
-    // if (i == filteredResults.length - 1) {
-    //   await checkFirstPokemon(data);
-    // }
   }
   return arrayPokemon;
 }
