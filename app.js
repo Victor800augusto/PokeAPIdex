@@ -80,17 +80,16 @@ let page = 1;
 let totalPages;
 let totalPokemon;
 let allPokemon;
+let initial;
 
 const init = async () => {
-  //
+  initial = true;
   const dataPokemon = await fetchAllPokemon();
   totalPokemon = dataPokemon.pokemon_entries.length;
   allPokemon = dataPokemon.pokemon_entries;
-  //
   totalPages = Math.ceil(totalPokemon / 21);
   containerPagination.innerHTML = createPagination(totalPages, page);
   const activePage = document.querySelector(".active");
-  // callFetchStandard(parseInt(activePage.textContent), allPokemon);
   getArrayPokemon(parseInt(activePage.textContent), allPokemon);
 };
 
@@ -106,6 +105,11 @@ async function fetchAllPokemon() {
 
 async function getArrayPokemon(currentPage, allPokemon) {
   const arrayPokemon = callFetchStandard(currentPage, allPokemon);
+
+  if (initial == false) {
+    clearLastPokemonBatch();
+  }
+  initial = false;
   preRenderCards(arrayPokemon);
   const listPokemon = await orderPokemon(arrayPokemon);
   const sortedPokemon = sortPokemon(listPokemon);
@@ -162,11 +166,13 @@ function createPagination(totalPages, page) {
     if (page == plength) {
       //if page is equal to plength than assign active string in the active variable
       active = "active";
+      liTag += `<li class="numb ${active}"><span>${plength}</span></li>`;
     } else {
       //else leave empty to the active variable
       active = "";
+      liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemon)"><span>${plength}</span></li>`;
     }
-    liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemon)"><span>${plength}</span></li>`;
+    // liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemon)"><span>${plength}</span></li>`;
   }
 
   if (page < totalPages - 1) {
@@ -213,7 +219,6 @@ function fetchStandardPokemon(firstPokemon, quantityPokemon, allPokemon) {
   return arrayPokemon;
 }
 
-//
 function preRenderCards(arrayPokemon) {
   let i = 0;
   while (i < arrayPokemon.length) {
@@ -226,9 +231,7 @@ function preRenderCards(arrayPokemon) {
     i = i + 1;
   }
 }
-//
 
-//
 function addSkeleton(div) {
   let skeletonImgContainer = document.createElement("figure");
   skeletonImgContainer.classList.add("imgContainer", "loading");
@@ -249,26 +252,19 @@ function addSkeleton(div) {
   skeletonData.append(skeletonName);
   skeletonData.append(skeletonType);
 }
-//
 
-//
 async function orderPokemon(arrayPokemonData) {
-  // console.log(arrayPokemonData);
   let arrayPokemon = [];
   for (let i = 0; i < arrayPokemonData.length; i++) {
     let id = arrayPokemonData[i].pokemon_species.url.split("/")[6];
     let url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
-    // let url = arrayPokemonData[i].pokemon_species.url;
     const itemPokemon = await getDataPokemon(url);
     arrayPokemon.push(itemPokemon);
   }
   return arrayPokemon;
 }
-//
 
-//
 async function getDataPokemon(item) {
-  // console.log(item);
   try {
     const response = await fetch(item);
     const itemApi = await response.json();
@@ -284,9 +280,7 @@ async function getDataPokemon(item) {
     console.log(error);
   }
 }
-//
 
-//
 function sortPokemon(arrayPokemon) {
   arrayPokemon.sort((a, b) => {
     if (a.id > b.id) {
@@ -297,9 +291,7 @@ function sortPokemon(arrayPokemon) {
   });
   return arrayPokemon;
 }
-//
 
-//
 function populatePokemon(sortedPokemon) {
   for (let i = 0; i < sortedPokemon.length; i++) {
     const namePokemon = sortedPokemon[i].name;
@@ -312,9 +304,7 @@ function populatePokemon(sortedPokemon) {
     }
   }
 }
-//
 
-//
 function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
   html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of the pokemon ${namePokemon}"></img>
    <div class="containerPokemonData">
@@ -331,17 +321,15 @@ function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
   const pokemonEntry = divPokemon.childNodes[2].childNodes[5];
   listTypePokemon(typePokemon, pokemonEntry);
 }
-//
 
-//
 function removeSkeleton(divPokemon) {
   divPokemon.classList.remove("loading");
 }
-//
+
 function titleCase(string) {
   return string[0].toUpperCase() + string.slice(1).toLowerCase();
 }
-//
+
 function listTypePokemon(typePokemon, pokemonEntry) {
   gradientTypePokemon(pokemonEntry.parentElement, typePokemon);
   for (i = 0; i < typePokemon.length; i++) {
@@ -354,9 +342,7 @@ function listTypePokemon(typePokemon, pokemonEntry) {
     pokemonEntry.append(span);
   }
 }
-//
 
-//
 function gradientTypePokemon(pokemon, typePokemon) {
   let colors = [];
   for (i = 0; i < typePokemon.length; i++) {
@@ -371,6 +357,9 @@ function gradientTypePokemon(pokemon, typePokemon) {
     pokemon.style.background = `linear-gradient(90deg,${colors[0]}85,${colors[1]}85)`;
   }
 }
-//
+
+function clearLastPokemonBatch() {
+  container.innerHTML = "";
+}
 
 window.addEventListener("load", init());

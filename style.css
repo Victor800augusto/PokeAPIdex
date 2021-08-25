@@ -63,20 +63,6 @@ p {
   min-height: 800px;
 }
 
-button {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: 2px solid #202124;
-  font-size: 1rem;
-  font-weight: 700;
-  background-color: #fff;
-  margin: 0 5px;
-}
-button:enabled:hover {
-  cursor: pointer;
-  background-color: #bfbfbf;
-}
-
 body {
   text-align: center;
 }
@@ -124,6 +110,9 @@ body {
 .pagination ul li.btn {
   padding: 0 20px;
   border-radius: 50px;
+}
+.pagination li.active {
+  cursor: default;
 }
 .pagination li.active,
 .pagination ul li.numb:hover,
