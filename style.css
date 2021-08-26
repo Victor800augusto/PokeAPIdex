@@ -63,26 +63,26 @@ header {
 .containerPokemon {
   max-width: 1440px;
   margin: 0 auto;
-  padding-bottom: 10px;
+  padding: 25px 50px 10px 50px;
 }
 
 #container {
   display: flex;
   justify-content: center;
   align-content: flex-start;
-  padding: 35px 50px 25px 50px;
+  padding: 15px 0;
   margin: 0 auto;
   flex-wrap: wrap;
   min-height: 800px;
   gap: 20px;
-  margin-bottom: 5px;
+  background: #d4d4d4;
 }
 
 /* Pagination styles */
 
 .pagination {
   max-width: 450px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .pagination ul {
@@ -329,7 +329,6 @@ header {
 footer {
   background: #1f1f1f;
   padding: 30px 60px;
-  margin-top: 15px;
 }
 
 footer h3 {
