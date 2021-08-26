@@ -112,7 +112,7 @@ async function getArrayPokemon(currentPage, allPokemon) {
   initial = false;
   preRenderCards(arrayPokemon);
   const listPokemon = await orderPokemon(arrayPokemon);
-  const sortedPokemon = sortPokemon(listPokemon);
+  const sortedPokemon = sort(listPokemon);
   populatePokemon(sortedPokemon);
 }
 
@@ -281,15 +281,15 @@ async function getDataPokemon(item) {
   }
 }
 
-function sortPokemon(arrayPokemon) {
-  arrayPokemon.sort((a, b) => {
+function sort(array) {
+  array.sort((a, b) => {
     if (a.id > b.id) {
       return 1;
     } else {
       return -1;
     }
   });
-  return arrayPokemon;
+  return array;
 }
 
 function populatePokemon(sortedPokemon) {
@@ -306,7 +306,7 @@ function populatePokemon(sortedPokemon) {
 }
 
 function htmlPokemon(namePokemon, imgPokemon, typePokemon, id, divPokemon) {
-  html = `<img src="${imgPokemon}" class="imgPokemon" alt="Image of the pokemon ${namePokemon}"></img>
+  html = `<figure class="imgContainer"><img src="${imgPokemon}" class="imgPokemon" alt="Image of the pokemon ${namePokemon}"></img></figure>
    <div class="containerPokemonData">
    <span class="idPokemon">${id}</span>
    <h3>${titleCase(namePokemon)}</h3>
