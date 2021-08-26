@@ -24,6 +24,9 @@ body {
   color: #202124;
   line-height: 1.5;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 ul {
   list-style-type: none;
@@ -327,6 +330,7 @@ header {
 
 /* Footer */
 footer {
+  margin-top: auto;
   background: #1f1f1f;
   padding: 30px 60px;
 }
