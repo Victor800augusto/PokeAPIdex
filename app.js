@@ -87,6 +87,7 @@ const init = async () => {
   const dataPokemon = await fetchAllPokemon();
   totalPokemon = dataPokemon.pokemon_entries.length;
   allPokemon = dataPokemon.pokemon_entries;
+  console.log(allPokemon);
   totalPages = Math.ceil(totalPokemon / 21);
   containerPagination.innerHTML = createPagination(totalPages, page);
   const activePage = document.querySelector(".active");
