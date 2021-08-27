@@ -20,7 +20,17 @@ h1 {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #cccccc;
+  background: #e73221;
+  /* background: linear-gradient(
+    120deg,
+    #e73221 30%,
+    #dd6c61 38%,
+    #dd6c61 40%,
+    #e73221 48%
+  ); */
+  /* background-size: 200% 100%;
+  background-position: 100% 0;
+  animation: bodyAnimation 20s infinite; */
   color: #202124;
   line-height: 1.5;
   text-align: center;
@@ -28,6 +38,13 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* @keyframes bodyAnimation {
+  100% {
+    background-position: -100% 0;
+  }
+} */
+
 ul {
   list-style-type: none;
 }
@@ -98,10 +115,12 @@ header {
   align-content: flex-start;
   padding: 20px;
   margin: 0 auto;
+  margin-top: 13px;
   flex-wrap: wrap;
   min-height: 800px;
   gap: 20px;
-  background: #d4d4d4;
+  background: #c2d6ed;
+  box-shadow: 0 0 2em #c2d6ed;
 }
 
 /* Pagination styles */
@@ -316,11 +335,6 @@ header {
   border-radius: 50%;
 }
 
-@keyframes skeleton {
-  100% {
-    background-position: -100% 0;
-  }
-}
 .namePokemon.loading {
   margin-top: 10px;
   height: 25px;
@@ -348,6 +362,12 @@ header {
   background-size: 200% 100%;
   background-position: 100% 0;
   animation: skeleton 2s infinite;
+}
+
+@keyframes skeleton {
+  100% {
+    background-position: -100% 0;
+  }
 }
 /* Skeleton Loading styles end */
 
