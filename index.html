@@ -13,11 +13,19 @@
       <h1>Pokédex</h1>
     </header>
     <section class="containerPokemon">
-      <select id="pokemonOrder">
+      <!-- <select id="pokemonOrder">
         <option value="" disabled>Sort Pokémon by...</option>
         <option value="lowFirst" selected>Lowest Number first</option>
         <option value="highFirst">Highest Number first</option>
-      </select>
+      </select> -->
+      <!--  -->
+      <select data-custom>
+      <option value="LowestFirst">Lowest Number</option>
+      <option value="HighestFirst">Highest Number</option>
+      <option value="aToZ">A-Z</option>
+      <option value="zToA">Z-A</option>
+    </select>
+    <!--  -->
       <div id="container"></div>
       </div>
       <div class="pagination">
