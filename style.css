@@ -85,9 +85,10 @@ header {
   padding-top: 18px;
 }
 .containerPokemon {
+  min-width: 400px;
   max-width: 1650px;
   margin: 0 auto;
-  padding: 20px 50px 5px 50px;
+  padding: 40px 50px 5px 50px;
   display: flex;
   flex-direction: column;
 }
@@ -127,7 +128,14 @@ header {
   box-shadow: 0 0 2em #c2d6ed;
   border-radius: 20px;
 }
-
+@media (max-width: 650px) {
+  .containerPokemon {
+    padding: 20px 25px;
+  }
+  #container {
+    padding: 50px 35px;
+  }
+}
 /* Pagination styles */
 
 .pagination {
@@ -386,7 +394,7 @@ footer {
 footer h3 {
   color: #fff;
 }
-/*  */
+/* DropDown styles */
 .custom-select-container,
 .custom-select-value,
 .custom-select-options,
