@@ -82,6 +82,7 @@ let totalPokemon;
 let allPokemon;
 let allPokemonOrdered;
 let initial;
+let lastOrder;
 
 const init = async () => {
   initial = true;
@@ -114,7 +115,6 @@ async function fetchAllPokemon() {
 async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   //
   allPokemonOrdered = await sortPokemonBy(sortOrder, allPokemonList);
-  console.log(allPokemonOrdered);
   //
   const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
 
@@ -124,26 +124,31 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   initial = false;
   preRenderCards(arrayPokemon);
   const listPokemon = await orderPokemon(arrayPokemon);
-  const sortedPokemon = sort(listPokemon);
+  const sortedPokemon = sortPokemon(listPokemon);
+  // const sortedPokemon = sort(listPokemon);
   populatePokemon(sortedPokemon);
 }
 
 function sortPokemonBy(sortOrder, allPokemonList) {
   // let allPokemonOrdered = allPokemon.map((item) => item);
-  console.log(allPokemon);
   if (sortOrder == "lowestFirst") {
+    lastOrder = "lowestFirst";
     createPagination(totalPages, 1);
     return allPokemonList;
   }
   if (sortOrder == "highestFirst") {
+    lastOrder = "highestFirst";
     createPagination(totalPages, 1);
-    return allPokemonList.reverse();
+    let allPokemonOrdered = allPokemon.map((item) => item);
+    return allPokemonOrdered.reverse();
   }
   if (sortOrder == "alphabetAZ") {
+    lastOrder = "alphabetAZ";
     createPagination(totalPages, 1);
     return allPokemonList;
   }
   if (sortOrder == "alphabetZA") {
+    lastOrder = "alphabetZA";
     createPagination(totalPages, 1);
     return allPokemonList;
   }
@@ -169,12 +174,12 @@ function createPagination(totalPages, page) {
       page - 1
     });getArrayPokemon(${
       page - 1
-    },allPokemon);scrollToTop()"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
+    },allPokemonOrdered);scrollToTop()"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
   }
 
   if (page > 2) {
     //if page value is more than 2 then add first page after the previous button
-    liTag += `<li class="first numb" onclick="createPagination(totalPages, 1);getArrayPokemon(1,allPokemon);scrollToTop()"><span>1</span></li>`;
+    liTag += `<li class="first numb" onclick="createPagination(totalPages, 1);getArrayPokemon(1,allPokemonOrdered);scrollToTop()"><span>1</span></li>`;
     if (page > 3) {
       //if page value is greater than 3 then add this (...) after the first li or page
       liTag += `<li class="dots"><span>...</span></li>`;
@@ -211,7 +216,7 @@ function createPagination(totalPages, page) {
     } else {
       //else leave empty to the active variable
       active = "";
-      liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemon);scrollToTop()"><span>${plength}</span></li>`;
+      liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemonOrdered);scrollToTop()"><span>${plength}</span></li>`;
     }
     // liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemon)"><span>${plength}</span></li>`;
   }
@@ -222,7 +227,7 @@ function createPagination(totalPages, page) {
       //if page value is less than totalPage value -2 then add this (...) before the last li or page
       liTag += `<li class="dots"><span>...</span></li>`;
     }
-    liTag += `<li class="last numb" onclick="createPagination(totalPages, ${totalPages});getArrayPokemon(${totalPages},allPokemon);scrollToTop()"><span>${totalPages}</span></li>`;
+    liTag += `<li class="last numb" onclick="createPagination(totalPages, ${totalPages});getArrayPokemon(${totalPages},allPokemonOrdered);scrollToTop()"><span>${totalPages}</span></li>`;
   }
 
   if (page < totalPages) {
@@ -231,7 +236,7 @@ function createPagination(totalPages, page) {
       page + 1
     });getArrayPokemon(${
       page + 1
-    },allPokemon);scrollToTop()"><span>Next <i class="fas fa-angle-right"></i></span></li>`;
+    },allPokemonOrdered);scrollToTop()"><span>Next <i class="fas fa-angle-right"></i></span></li>`;
   }
   containerPagination.innerHTML = liTag; //add li tag inside ul tag
   return liTag; //return the li tag
@@ -326,9 +331,28 @@ async function getDataPokemon(item) {
   }
 }
 
+function sortPokemon(listPokemon) {
+  if (lastOrder == "lowestFirst") {
+    return sort(listPokemon);
+  }
+  if (lastOrder == "highestFirst") {
+    return reverseSort(listPokemon);
+  }
+}
+
 function sort(array) {
   array.sort((a, b) => {
     if (a.id > b.id) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  return array;
+}
+function reverseSort(array) {
+  array.sort((a, b) => {
+    if (a.id < b.id) {
       return 1;
     } else {
       return -1;
