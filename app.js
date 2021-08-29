@@ -126,6 +126,7 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   const listPokemon = await orderPokemon(arrayPokemon);
   const sortedPokemon = sortPokemon(listPokemon);
   // const sortedPokemon = sort(listPokemon);
+  console.log(sortedPokemon);
   populatePokemon(sortedPokemon);
 }
 
@@ -145,12 +146,16 @@ function sortPokemonBy(sortOrder, allPokemonList) {
   if (sortOrder == "alphabetAZ") {
     lastOrder = "alphabetAZ";
     createPagination(totalPages, 1);
-    return allPokemonList;
+    let allPokemonOrdered = allPokemon.map((item) => item);
+    allPokemonOrdered = sortByName(allPokemonOrdered);
+    return allPokemonOrdered;
   }
   if (sortOrder == "alphabetZA") {
-    lastOrder = "alphabetZA";
+    lastOrder = "alphabetAZ";
     createPagination(totalPages, 1);
-    return allPokemonList;
+    let allPokemonOrdered = allPokemon.map((item) => item);
+    allPokemonOrdered = sortByName(allPokemonOrdered);
+    return allPokemonOrdered;
   }
   if (sortOrder == undefined) {
     return allPokemonList;
@@ -336,7 +341,13 @@ function sortPokemon(listPokemon) {
     return sort(listPokemon);
   }
   if (lastOrder == "highestFirst") {
-    return reverseSort(listPokemon);
+    return sort(listPokemon).reverse();
+  }
+  if (lastOrder == "alphabetAZ") {
+    return sortListByName(listPokemon);
+  }
+  if (lastOrder == "alphabetAZ") {
+    return sortListByName(listPokemon);
   }
 }
 
@@ -350,16 +361,27 @@ function sort(array) {
   });
   return array;
 }
-function reverseSort(array) {
-  array.sort((a, b) => {
-    if (a.id < b.id) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
+
+function sortByName(array) {
+  array.sort((a, b) =>
+    a.pokemon_species.name.localeCompare(b.pokemon_species.name)
+  );
   return array;
 }
+function sortListByName(array) {
+  array.sort((a, b) => a.name.localeCompare(b.name));
+  return array;
+}
+// function reverseSort(array) {
+//   array.sort((a, b) => {
+//     if (a.id < b.id) {
+//       return 1;
+//     } else {
+//       return -1;
+//     }
+//   });
+//   return array;
+// }
 
 function populatePokemon(sortedPokemon) {
   for (let i = 0; i < sortedPokemon.length; i++) {
