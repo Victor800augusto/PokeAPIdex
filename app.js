@@ -151,11 +151,11 @@ function sortPokemonBy(sortOrder, allPokemonList) {
     return allPokemonOrdered;
   }
   if (sortOrder == "alphabetZA") {
-    lastOrder = "alphabetAZ";
+    lastOrder = "alphabetZA";
     createPagination(totalPages, 1);
     let allPokemonOrdered = allPokemon.map((item) => item);
     allPokemonOrdered = sortByName(allPokemonOrdered);
-    return allPokemonOrdered;
+    return allPokemonOrdered.reverse();
   }
   if (sortOrder == undefined) {
     return allPokemonList;
@@ -346,8 +346,8 @@ function sortPokemon(listPokemon) {
   if (lastOrder == "alphabetAZ") {
     return sortListByName(listPokemon);
   }
-  if (lastOrder == "alphabetAZ") {
-    return sortListByName(listPokemon);
+  if (lastOrder == "alphabetZA") {
+    return sortListByName(listPokemon).reverse();
   }
 }
 
