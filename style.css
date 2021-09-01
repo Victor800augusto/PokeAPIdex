@@ -121,7 +121,7 @@ header {
   }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 470px) {
   .containerPokemon {
     min-width: 300px;
     padding: 20px 10px;
@@ -191,7 +191,7 @@ header {
   background: #3466af;
 }
 
-@media (max-width: 440px) {
+@media (max-width: 470px) {
   .pagination ul {
     align-items: center;
   }
@@ -204,6 +204,19 @@ header {
     width: 25px;
     line-height: 25px;
   }
+}
+@media (min-width: 385px) and (max-width: 470px) {
+  .pagination ul li {
+    font-size: 16px;
+    line-height: 30px;
+  }
+  .pagination ul li.numb {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+  }
+}
+@media (max-width: 360px) {
   .pagination ul li.btn.prev {
     padding: 0 10px 0 0;
   }
@@ -283,7 +296,7 @@ header {
   border-radius: 5px;
 }
 
-@media (max-width: 440px) {
+@media (max-width: 400px) {
   .itemPokemon {
     min-width: 250px;
   }
@@ -505,7 +518,7 @@ footer h3 {
   background-color: hsl(200, 100%, 50%);
 }
 
-@media (max-width: 440px) {
+@media (max-width: 470px) {
   .custom-select-container {
     align-self: stretch;
   }
