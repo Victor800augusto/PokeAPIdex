@@ -113,9 +113,7 @@ async function fetchAllPokemon() {
 }
 
 async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
-  //
   allPokemonOrdered = await sortPokemonBy(sortOrder, allPokemonList);
-  //
   const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
 
   if (initial == false) {
@@ -125,13 +123,10 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   preRenderCards(arrayPokemon);
   const listPokemon = await orderPokemon(arrayPokemon);
   const sortedPokemon = sortPokemon(listPokemon);
-  // const sortedPokemon = sort(listPokemon);
-  console.log(sortedPokemon);
   populatePokemon(sortedPokemon);
 }
 
 function sortPokemonBy(sortOrder, allPokemonList) {
-  // let allPokemonOrdered = allPokemon.map((item) => item);
   if (sortOrder == "lowestFirst") {
     lastOrder = "lowestFirst";
     createPagination(totalPages, 1);
@@ -372,16 +367,6 @@ function sortListByName(array) {
   array.sort((a, b) => a.name.localeCompare(b.name));
   return array;
 }
-// function reverseSort(array) {
-//   array.sort((a, b) => {
-//     if (a.id < b.id) {
-//       return 1;
-//     } else {
-//       return -1;
-//     }
-//   });
-//   return array;
-// }
 
 function populatePokemon(sortedPokemon) {
   for (let i = 0; i < sortedPokemon.length; i++) {
@@ -494,10 +479,7 @@ class Select {
       `[data-value="${newSelectedOption.value}"]`
     );
     newCustomElement.classList.add("selected");
-    // console.log(newCustomElement.dataset.value);
-    //
     getArrayPokemon((page = 1), allPokemon, newCustomElement.dataset.value);
-    //
     newCustomElement.scrollIntoView({ block: "nearest" });
   }
 }
@@ -573,5 +555,4 @@ function getFormattedOptions(optionElements) {
   });
 }
 
-//
 window.addEventListener("load", init());
