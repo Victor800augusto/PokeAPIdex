@@ -13,19 +13,19 @@
       <h1>Pokédex</h1>
     </header>
     <section class="containerPokemon">
-      <!-- <select id="pokemonOrder">
-        <option value="" disabled>Sort Pokémon by...</option>
-        <option value="lowFirst" selected>Lowest Number first</option>
-        <option value="highFirst">Highest Number first</option>
-      </select> -->
-      <!--  -->
+      <div class="containerFilters">
+        <div class="containerSearch">
+          <label for="inputSearch">Pokémon name or number</label>
+          <input type="search" id="inputSearch" name="inputSearch" maxlength="20">
+        </div>
       <select data-custom>
-      <option value="lowestFirst">Lowest Number</option>
-      <option value="highestFirst">Highest Number</option>
-      <option value="alphabetAZ">A-Z</option>
-      <option value="alphabetZA">Z-A</option>
-    </select>
-    <!--  -->
+        <option value="lowestFirst">Lowest Number</option>
+        <option value="highestFirst">Highest Number</option>
+        <option value="alphabetAZ">A-Z</option>
+        <option value="alphabetZA">Z-A</option>
+      </select>
+      </div>
+      
       <div id="container"></div>
       </div>
       <div class="pagination">

@@ -113,6 +113,17 @@ async function fetchAllPokemon() {
 }
 
 async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
+  //
+  for (i = 0; i < allPokemonList.length; i++) {
+    if (allPokemonList[i].pokemon_species.name.includes("bul")) {
+      console.log(allPokemonList[i].pokemon_species.name);
+    }
+    // if (allPokemonList[i].entry_number.toString().includes(1)) {
+    //   console.log(allPokemonList[i].pokemon_species.name);
+    // }
+  }
+  //
+
   allPokemonOrdered = await sortPokemonBy(sortOrder, allPokemonList);
   const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
 

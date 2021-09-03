@@ -76,6 +76,27 @@ header {
   display: flex;
   flex-direction: column;
 }
+.containerFilters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.containerSearch label {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.containerSearch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#inputSearch {
+  font-size: 16px;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+}
 
 #pokemonOrder {
   background-color: #313131;
