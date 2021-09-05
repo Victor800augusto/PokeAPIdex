@@ -1,5 +1,6 @@
 const containerPagination = document.querySelector(".pagination ul");
 const container = document.querySelector("#container");
+const inputSearch = document.getElementById("inputSearch");
 
 const typeColors = [
   {
@@ -101,6 +102,21 @@ const init = async () => {
     sortOrder
   );
 };
+inputSearch.addEventListener("keypress", functiontest);
+function functiontest(e) {
+  const format = /[*|\":<>[\]{}`\\()./?,+';@&$]/;
+  if (format.test(e.key)) {
+    e.preventDefault();
+  }
+}
+inputSearch.addEventListener("input", searchPokemon);
+function searchPokemon(e) {
+  if (isNaN(Number(e.target.value))) {
+    console.log("string");
+  } else {
+    console.log("number");
+  }
+}
 
 async function fetchAllPokemon() {
   try {
@@ -113,6 +129,7 @@ async function fetchAllPokemon() {
 }
 
 async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
+  console.log(inputSearch.value);
   //
   for (i = 0; i < allPokemonList.length; i++) {
     if (allPokemonList[i].pokemon_species.name.includes("bul")) {
