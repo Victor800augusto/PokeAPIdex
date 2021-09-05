@@ -102,8 +102,8 @@ const init = async () => {
     sortOrder
   );
 };
-inputSearch.addEventListener("keypress", functiontest);
-function functiontest(e) {
+inputSearch.addEventListener("keypress", checkCharacters);
+function checkCharacters(e) {
   const format = /[*|\":<>[\]{}`\\()./?,+';@&$]/;
   if (format.test(e.key)) {
     e.preventDefault();
