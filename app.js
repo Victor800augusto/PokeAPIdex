@@ -104,17 +104,34 @@ const init = async () => {
 };
 inputSearch.addEventListener("keypress", checkCharacters);
 function checkCharacters(e) {
-  const format = /[*|\":<>[\]{}`\\()./?,+';@&$]/;
-  if (format.test(e.key)) {
+  const format = /[0-9A-z-]/g;
+  if (!format.test(e.key)) {
     e.preventDefault();
   }
 }
 inputSearch.addEventListener("input", searchPokemon);
 function searchPokemon(e) {
-  if (isNaN(Number(e.target.value))) {
-    console.log("string");
-  } else {
-    console.log("number");
+  if (isNaN(Number(e.target.value)) && e.target.value.length > 3) {
+    let searchArray = [];
+    for (i = 0; i < allPokemon.length; i++) {
+      if (allPokemon[i].pokemon_species.name.includes(`${e.target.value}`)) {
+        searchArray.push(allPokemon[i]);
+        // console.log(allPokemon[i].pokemon_species.name);
+      }
+      // if (allPokemonList[i].entry_number.toString().includes(1)) {
+      //   console.log(allPokemonList[i].pokemon_species.name);
+      // }
+    }
+    console.log(searchArray);
+    // getArrayPokemon(1, searchArray);
+  } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
+    let searchArray = [];
+    for (i = 0; i < allPokemon.length; i++) {
+      if (allPokemon[i].entry_number.toString().includes(`${e.target.value}`)) {
+        searchArray.push(allPokemon[i]);
+      }
+    }
+    console.log(searchArray);
   }
 }
 
@@ -129,16 +146,16 @@ async function fetchAllPokemon() {
 }
 
 async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
-  console.log(inputSearch.value);
+  // console.log(inputSearch.value);
   //
-  for (i = 0; i < allPokemonList.length; i++) {
-    if (allPokemonList[i].pokemon_species.name.includes("bul")) {
-      console.log(allPokemonList[i].pokemon_species.name);
-    }
-    // if (allPokemonList[i].entry_number.toString().includes(1)) {
-    //   console.log(allPokemonList[i].pokemon_species.name);
-    // }
-  }
+  // for (i = 0; i < allPokemonList.length; i++) {
+  //   if (allPokemonList[i].pokemon_species.name.includes("bul")) {
+  //     console.log(allPokemonList[i].pokemon_species.name);
+  //   }
+  //   // if (allPokemonList[i].entry_number.toString().includes(1)) {
+  //   //   console.log(allPokemonList[i].pokemon_species.name);
+  //   // }
+  // }
   //
 
   allPokemonOrdered = await sortPokemonBy(sortOrder, allPokemonList);

@@ -142,6 +142,13 @@ header {
   }
 }
 
+@media (max-width: 550px) {
+  .containerFilters {
+    flex-direction: column;
+    gap: 25px;
+  }
+}
+
 @media (max-width: 470px) {
   .containerPokemon {
     min-width: 300px;
@@ -539,7 +546,7 @@ footer h3 {
   background-color: hsl(200, 100%, 50%);
 }
 
-@media (max-width: 470px) {
+@media (max-width: 550px) {
   .custom-select-container {
     align-self: stretch;
   }
