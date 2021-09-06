@@ -84,6 +84,9 @@ let allPokemon;
 let allPokemonOrdered;
 let initial;
 let lastOrder;
+//
+let isSearch = false;
+//
 
 const init = async () => {
   initial = true;
@@ -111,17 +114,19 @@ function checkCharacters(e) {
 }
 inputSearch.addEventListener("input", searchPokemon);
 function searchPokemon(e) {
-  if (isNaN(Number(e.target.value)) && e.target.value.length > 3) {
+  if (isNaN(Number(e.target.value)) && e.target.value.length >= 3) {
     let searchArray = [];
     for (i = 0; i < allPokemon.length; i++) {
       if (allPokemon[i].pokemon_species.name.includes(`${e.target.value}`)) {
         searchArray.push(allPokemon[i]);
-        // console.log(allPokemon[i].pokemon_species.name);
       }
-      // if (allPokemonList[i].entry_number.toString().includes(1)) {
-      //   console.log(allPokemonList[i].pokemon_species.name);
-      // }
     }
+    isSearch = true;
+
+    totalPages = Math.ceil(searchArray / 21);
+    containerPagination.innerHTML = createPagination(totalPages, page);
+
+    getArrayPokemon(1, searchArray, "lowestFirst");
     console.log(searchArray);
     // getArrayPokemon(1, searchArray);
   } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
@@ -131,7 +136,25 @@ function searchPokemon(e) {
         searchArray.push(allPokemon[i]);
       }
     }
-    console.log(searchArray);
+    isSearch = true;
+
+    totalPages = Math.ceil(searchArray / 21);
+    containerPagination.innerHTML = createPagination(totalPages, page);
+    // getArrayPokemon(1, searchArray, "lowestFirst");
+    // console.log(searchArray);
+  } else {
+    isSearch = false;
+    allPokemonOrdered = allPokemon.map((item) => item);
+    totalPages = Math.ceil(totalPokemon / 21);
+    containerPagination.innerHTML = createPagination(totalPages, page);
+    const activePage = document.querySelector(".active");
+    let sortOrder = document.querySelector(".custom-select-options .selected")
+      .dataset.value;
+    getArrayPokemon(
+      parseInt(activePage.textContent),
+      allPokemonOrdered,
+      sortOrder
+    );
   }
 }
 
@@ -146,21 +169,18 @@ async function fetchAllPokemon() {
 }
 
 async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
-  // console.log(inputSearch.value);
-  //
-  // for (i = 0; i < allPokemonList.length; i++) {
-  //   if (allPokemonList[i].pokemon_species.name.includes("bul")) {
-  //     console.log(allPokemonList[i].pokemon_species.name);
-  //   }
-  //   // if (allPokemonList[i].entry_number.toString().includes(1)) {
-  //   //   console.log(allPokemonList[i].pokemon_species.name);
-  //   // }
-  // }
-  //
-
   allPokemonOrdered = await sortPokemonBy(sortOrder, allPokemonList);
-  const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
-
+  //
+  let arrayPokemon;
+  if (isSearch) {
+    arrayPokemon = callFetchSearch(currentPage, allPokemonOrdered);
+  } else {
+    arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
+  }
+  //
+  // const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
+  // const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
+  //
   if (initial == false) {
     clearLastPokemonBatch();
   }
@@ -287,6 +307,29 @@ function createPagination(totalPages, page) {
   return liTag; //return the li tag
 }
 
+function callFetchSearch(currentPage, allPokemonOrdered) {
+  let firstPokemon = (currentPage - 1) * 21 + 1;
+  if (currentPage == 1) {
+    return fetchSearchPokemon(
+      currentPage,
+      allPokemonOrdered.length,
+      allPokemonOrdered
+    );
+  } else if (currentPage == totalPages) {
+    return fetchSearchPokemon(
+      firstPokemon,
+      allPokemonOrdered.length - firstPokemon + 1,
+      allPokemonOrdered
+    );
+  } else {
+    return fetchSearchPokemon(
+      firstPokemon,
+      allPokemonOrdered.length,
+      allPokemonOrdered
+    );
+  }
+}
+
 function callFetchStandard(currentPage, allPokemonOrdered) {
   let firstPokemon = (currentPage - 1) * 21 + 1;
   if (currentPage == 1) {
@@ -300,6 +343,14 @@ function callFetchStandard(currentPage, allPokemonOrdered) {
   } else {
     return fetchStandardPokemon(firstPokemon, 21, allPokemonOrdered);
   }
+}
+
+function fetchSearchPokemon(firstPokemon, quantityPokemon, allPokemonOrdered) {
+  let arrayPokemon = [];
+  for (let i = 0; i < quantityPokemon; i++) {
+    arrayPokemon.push(allPokemonOrdered[firstPokemon + i - 1]);
+  }
+  return arrayPokemon;
 }
 
 function fetchStandardPokemon(
