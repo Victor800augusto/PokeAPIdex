@@ -69,8 +69,9 @@ header {
   padding-top: 18px;
 }
 .containerPokemon {
-  min-width: 400px;
-  max-width: 1650px;
+  /* min-width: 400px;
+  max-width: 1650px; */
+  width: 100%;
   margin: 0 auto;
   padding: 40px 50px 5px 50px;
   display: flex;
@@ -120,6 +121,7 @@ header {
 }
 
 #container {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-content: flex-start;
