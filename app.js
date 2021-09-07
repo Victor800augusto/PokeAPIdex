@@ -85,6 +85,7 @@ let allPokemonOrdered;
 let initial;
 let lastOrder;
 let isSearch = false;
+let debounceTimeout;
 
 const init = async () => {
   initial = true;
@@ -117,33 +118,38 @@ function checkCharacters(e) {
 }
 inputSearch.addEventListener("input", searchPokemon);
 function searchPokemon(e) {
-  if (isNaN(Number(e.target.value)) && e.target.value.length >= 3) {
-    let searchArray = [];
-    for (i = 0; i < allPokemon.length; i++) {
-      if (
-        allPokemon[i].pokemon_species.name.includes(
-          `${e.target.value.toLowerCase()}`
-        )
-      ) {
-        searchArray.push(allPokemon[i]);
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    if (isNaN(Number(e.target.value)) && e.target.value.length >= 3) {
+      let searchArray = [];
+      for (i = 0; i < allPokemon.length; i++) {
+        if (
+          allPokemon[i].pokemon_species.name.includes(
+            `${e.target.value.toLowerCase()}`
+          )
+        ) {
+          searchArray.push(allPokemon[i]);
+        }
       }
-    }
-    searchGetArray(searchArray);
-  } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
-    let searchArray = [];
-    for (i = 0; i < allPokemon.length; i++) {
-      if (allPokemon[i].entry_number.toString().includes(`${e.target.value}`)) {
-        searchArray.push(allPokemon[i]);
+      searchGetArray(searchArray);
+    } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
+      let searchArray = [];
+      for (i = 0; i < allPokemon.length; i++) {
+        if (
+          allPokemon[i].entry_number.toString().includes(`${e.target.value}`)
+        ) {
+          searchArray.push(allPokemon[i]);
+        }
       }
+      searchGetArray(searchArray);
+    } else if (
+      e.target.value.length == 0 ||
+      (inputSearch.value.length < 3 && isNaN(inputSearch.value))
+    ) {
+      isSearch = false;
+      standardGetArray();
     }
-    searchGetArray(searchArray);
-  } else if (
-    e.target.value.length == 0 ||
-    (inputSearch.value.length < 3 && isNaN(inputSearch.value))
-  ) {
-    isSearch = false;
-    standardGetArray();
-  }
+  }, 700);
 }
 
 function searchGetArray(searchArray) {
@@ -174,7 +180,6 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   } else {
     arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
   }
-
   if (initial == false) {
     clearLastPokemonBatch();
   }
@@ -182,7 +187,7 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   preRenderCards(arrayPokemon);
   const listPokemon = await orderPokemon(arrayPokemon);
   const sortedPokemon = sortPokemon(listPokemon);
-  console.log(listPokemon);
+  console.log(sortedPokemon);
   populatePokemon(sortedPokemon);
 }
 
@@ -499,6 +504,7 @@ function sortListByName(array) {
 }
 
 function populatePokemon(sortedPokemon) {
+  console.log(sortedPokemon);
   for (let i = 0; i < sortedPokemon.length; i++) {
     const namePokemon = sortedPokemon[i].name;
     const imgPokemon = sortedPokemon[i].img;
