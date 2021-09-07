@@ -123,7 +123,8 @@ function searchPokemon(e) {
     }
     isSearch = true;
 
-    totalPages = Math.ceil(searchArray / 21);
+    totalPages = Math.ceil(searchArray.length / 21);
+    console.log(totalPages);
     containerPagination.innerHTML = createPagination(totalPages, page);
 
     getArrayPokemon(1, searchArray, "lowestFirst");
@@ -138,8 +139,9 @@ function searchPokemon(e) {
     }
     isSearch = true;
 
-    totalPages = Math.ceil(searchArray / 21);
+    totalPages = Math.ceil(searchArray.length / 21);
     containerPagination.innerHTML = createPagination(totalPages, page);
+    console.log(searchArray);
     // getArrayPokemon(1, searchArray, "lowestFirst");
     // console.log(searchArray);
   } else {
@@ -233,7 +235,7 @@ function createPagination(totalPages, page) {
   let beforePage = page - 1;
   let afterPage = page + 1;
 
-  if (page > 1) {
+  if (page > 1 && totalPages > 5) {
     //Show prev button if current page is greater than 1
     liTag += `<li class="btn prev" onclick="createPagination(totalPages, ${
       page - 1
@@ -242,10 +244,10 @@ function createPagination(totalPages, page) {
     },allPokemonOrdered);scrollToTop()"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
   }
 
-  if (page > 2) {
+  if (page > 2 && totalPages >= 5) {
     //if page value is more than 2 then add first page after the previous button
     liTag += `<li class="first numb" onclick="createPagination(totalPages, 1);getArrayPokemon(1,allPokemonOrdered);scrollToTop()"><span>1</span></li>`;
-    if (page > 3) {
+    if (page > 3 && totalPages > 5) {
       //if page value is greater than 3 then add this (...) after the first li or page
       liTag += `<li class="dots"><span>...</span></li>`;
     }
@@ -281,21 +283,23 @@ function createPagination(totalPages, page) {
     } else {
       //else leave empty to the active variable
       active = "";
-      liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemonOrdered);scrollToTop()"><span>${plength}</span></li>`;
+      if (plength >= 0) {
+        liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemonOrdered);scrollToTop()"><span>${plength}</span></li>`;
+      }
     }
     // liTag += `<li class="numb ${active}" onclick="createPagination(totalPages, ${plength});getArrayPokemon(${plength},allPokemon)"><span>${plength}</span></li>`;
   }
 
-  if (page < totalPages - 1) {
+  if (page < totalPages - 1 && totalPages >= 5) {
     //if page value is less than totalPage value -1 then show the last li or page
-    if (page < totalPages - 2) {
+    if (page < totalPages - 2 && totalPages > 5) {
       //if page value is less than totalPage value -2 then add this (...) before the last li or page
       liTag += `<li class="dots"><span>...</span></li>`;
     }
     liTag += `<li class="last numb" onclick="createPagination(totalPages, ${totalPages});getArrayPokemon(${totalPages},allPokemonOrdered);scrollToTop()"><span>${totalPages}</span></li>`;
   }
 
-  if (page < totalPages) {
+  if (page < totalPages && totalPages > 5) {
     //show the next button if the page value is less than totalPage
     liTag += `<li class="btn next" onclick="createPagination(totalPages, ${
       page + 1
