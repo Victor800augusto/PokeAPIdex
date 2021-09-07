@@ -117,18 +117,20 @@ function searchPokemon(e) {
   if (isNaN(Number(e.target.value)) && e.target.value.length >= 3) {
     let searchArray = [];
     for (i = 0; i < allPokemon.length; i++) {
-      if (allPokemon[i].pokemon_species.name.includes(`${e.target.value}`)) {
+      if (
+        allPokemon[i].pokemon_species.name.includes(
+          `${e.target.value.toLowerCase()}`
+        )
+      ) {
         searchArray.push(allPokemon[i]);
       }
     }
     isSearch = true;
 
     totalPages = Math.ceil(searchArray.length / 21);
-    console.log(totalPages);
     containerPagination.innerHTML = createPagination(totalPages, page);
 
     getArrayPokemon(1, searchArray, "lowestFirst");
-    console.log(searchArray);
     // getArrayPokemon(1, searchArray);
   } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
     let searchArray = [];
@@ -141,7 +143,6 @@ function searchPokemon(e) {
 
     totalPages = Math.ceil(searchArray.length / 21);
     containerPagination.innerHTML = createPagination(totalPages, page);
-    console.log(searchArray);
     getArrayPokemon(1, searchArray, "lowestFirst");
     // console.log(searchArray);
   } else {
@@ -312,7 +313,7 @@ function createPagination(totalPages, page) {
 }
 
 function callFetchSearch(currentPage, allPokemonOrdered) {
-  console.log(allPokemonOrdered);
+  // console.log(allPokemonOrdered);
   let quantityPokemon;
   if (allPokemonOrdered.length > 21) {
     quantityPokemon = 21;
