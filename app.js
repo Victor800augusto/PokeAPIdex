@@ -84,15 +84,17 @@ let allPokemon;
 let allPokemonOrdered;
 let initial;
 let lastOrder;
-//
 let isSearch = false;
-//
 
 const init = async () => {
   initial = true;
   const dataPokemon = await fetchAllPokemon();
   totalPokemon = dataPokemon.pokemon_entries.length;
   allPokemon = dataPokemon.pokemon_entries;
+  standardGetArray();
+};
+
+function standardGetArray() {
   allPokemonOrdered = allPokemon.map((item) => item);
   totalPages = Math.ceil(totalPokemon / 21);
   containerPagination.innerHTML = createPagination(totalPages, page);
@@ -104,7 +106,8 @@ const init = async () => {
     allPokemonOrdered,
     sortOrder
   );
-};
+}
+
 inputSearch.addEventListener("keypress", checkCharacters);
 function checkCharacters(e) {
   const format = /[0-9A-z-]/g;
@@ -115,7 +118,6 @@ function checkCharacters(e) {
 inputSearch.addEventListener("input", searchPokemon);
 function searchPokemon(e) {
   if (isNaN(Number(e.target.value)) && e.target.value.length >= 3) {
-    console.log("test1");
     let searchArray = [];
     for (i = 0; i < allPokemon.length; i++) {
       if (
@@ -126,50 +128,31 @@ function searchPokemon(e) {
         searchArray.push(allPokemon[i]);
       }
     }
-    isSearch = true;
-
-    totalPages = Math.ceil(searchArray.length / 21);
-    containerPagination.innerHTML = createPagination(totalPages, page);
-    const activePage = document.querySelector(".active");
-    let sortOrder = document.querySelector(".custom-select-options .selected")
-      .dataset.value;
-
-    getArrayPokemon(1, searchArray, sortOrder);
-    // getArrayPokemon(1, searchArray);
+    searchGetArray(searchArray);
   } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
-    console.log("test2");
     let searchArray = [];
     for (i = 0; i < allPokemon.length; i++) {
       if (allPokemon[i].entry_number.toString().includes(`${e.target.value}`)) {
         searchArray.push(allPokemon[i]);
       }
     }
-    isSearch = true;
-
-    totalPages = Math.ceil(searchArray.length / 21);
-    containerPagination.innerHTML = createPagination(totalPages, page);
-    const activePage = document.querySelector(".active");
-    let sortOrder = document.querySelector(".custom-select-options .selected")
-      .dataset.value;
-    getArrayPokemon(1, searchArray, sortOrder);
-    // console.log(searchArray);
+    searchGetArray(searchArray);
   } else if (
     e.target.value.length == 0 ||
     (inputSearch.value.length < 3 && isNaN(inputSearch.value))
   ) {
     isSearch = false;
-    allPokemonOrdered = allPokemon.map((item) => item);
-    totalPages = Math.ceil(totalPokemon / 21);
-    containerPagination.innerHTML = createPagination(totalPages, page);
-    const activePage = document.querySelector(".active");
-    let sortOrder = document.querySelector(".custom-select-options .selected")
-      .dataset.value;
-    getArrayPokemon(
-      parseInt(activePage.textContent),
-      allPokemonOrdered,
-      sortOrder
-    );
+    standardGetArray();
   }
+}
+
+function searchGetArray(searchArray) {
+  isSearch = true;
+  totalPages = Math.ceil(searchArray.length / 21);
+  containerPagination.innerHTML = createPagination(totalPages, page);
+  let sortOrder = document.querySelector(".custom-select-options .selected")
+    .dataset.value;
+  getArrayPokemon(1, searchArray, sortOrder);
 }
 
 async function fetchAllPokemon() {
@@ -184,18 +167,14 @@ async function fetchAllPokemon() {
 
 async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   allPokemonOrdered = await sortPokemonBy(sortOrder, allPokemonList);
-  console.log(allPokemonOrdered);
-  //
+
   let arrayPokemon;
   if (isSearch) {
     arrayPokemon = callFetchSearch(currentPage, allPokemonOrdered);
   } else {
     arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
   }
-  //
-  // const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
-  // const arrayPokemon = callFetchStandard(currentPage, allPokemonOrdered);
-  //
+
   if (initial == false) {
     clearLastPokemonBatch();
   }
@@ -203,6 +182,7 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   preRenderCards(arrayPokemon);
   const listPokemon = await orderPokemon(arrayPokemon);
   const sortedPokemon = sortPokemon(listPokemon);
+  console.log(listPokemon);
   populatePokemon(sortedPokemon);
 }
 
@@ -364,7 +344,6 @@ function createPagination(totalPages, page) {
 }
 
 function callFetchSearch(currentPage, allPokemonOrdered) {
-  // console.log(allPokemonOrdered);
   let quantityPokemon;
   if (allPokemonOrdered.length > 21) {
     quantityPokemon = 21;
@@ -588,7 +567,7 @@ function gradientTypePokemon(pokemon, typePokemon) {
 function clearLastPokemonBatch() {
   container.innerHTML = "";
 }
-//
+
 const selectElements = document.querySelectorAll("[data-custom]");
 
 class Select {
@@ -631,17 +610,14 @@ class Select {
     );
     newCustomElement.classList.add("selected");
     if (inputSearch.value.length != 0) {
-      console.log(allPokemonOrdered);
       getArrayPokemon(
         (page = 1),
         allPokemonOrdered,
         newCustomElement.dataset.value
       );
     } else {
-      console.log("test");
       getArrayPokemon((page = 1), allPokemon, newCustomElement.dataset.value);
     }
-    // getArrayPokemon((page = 1), allPokemon, newCustomElement.dataset.value);
     newCustomElement.scrollIntoView({ block: "nearest" });
   }
 }
