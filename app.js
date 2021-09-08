@@ -1,7 +1,8 @@
 const containerPagination = document.querySelector(".pagination ul");
 const container = document.querySelector("#container");
 const inputSearch = document.getElementById("inputSearch");
-
+const noResults = document.querySelector(".no-results");
+console.log(container.childNodes);
 const typeColors = [
   {
     type: "grass",
@@ -131,6 +132,13 @@ function searchPokemon(e) {
           searchArray.push(allPokemon[i]);
         }
       }
+      //
+      if (searchArray.length == 0) {
+        noResults.style.display = "block";
+      } else {
+        noResults.style.display = "none";
+      }
+      //
       searchGetArray(searchArray);
     } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
       let searchArray = [];
@@ -141,11 +149,19 @@ function searchPokemon(e) {
           searchArray.push(allPokemon[i]);
         }
       }
+      //
+      if (searchArray.length == 0) {
+        noResults.style.display = "block";
+      } else {
+        noResults.style.display = "none";
+      }
+      //
       searchGetArray(searchArray);
     } else if (
       e.target.value.length == 0 ||
       (inputSearch.value.length < 3 && isNaN(inputSearch.value))
     ) {
+      noResults.style.display = "none";
       isSearch = false;
       standardGetArray();
     }
@@ -187,7 +203,6 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
   preRenderCards(arrayPokemon);
   const listPokemon = await orderPokemon(arrayPokemon);
   const sortedPokemon = sortPokemon(listPokemon);
-  console.log(sortedPokemon);
   populatePokemon(sortedPokemon);
 }
 
@@ -504,7 +519,6 @@ function sortListByName(array) {
 }
 
 function populatePokemon(sortedPokemon) {
-  console.log(sortedPokemon);
   for (let i = 0; i < sortedPokemon.length; i++) {
     const namePokemon = sortedPokemon[i].name;
     const imgPokemon = sortedPokemon[i].img;
@@ -571,7 +585,7 @@ function gradientTypePokemon(pokemon, typePokemon) {
 }
 
 function clearLastPokemonBatch() {
-  container.innerHTML = "";
+  container.innerHTML = noResults.outerHTML;
 }
 
 const selectElements = document.querySelectorAll("[data-custom]");

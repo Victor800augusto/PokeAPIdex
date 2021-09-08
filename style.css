@@ -135,6 +135,21 @@ header {
   box-shadow: 0 0 2em #c2d6ed;
   border-radius: 20px;
 }
+
+.no-results {
+  display: none;
+  width: 100%;
+}
+
+.no-results h3 {
+  color: #a1291b;
+  font-weight: bold;
+}
+
+.no-results p {
+  font-weight: bold;
+}
+
 @media (max-width: 650px) {
   .containerPokemon {
     padding: 20px 25px;
