@@ -7,6 +7,7 @@
     <script defer src="app.js"></script>
     <!-- Styles -->
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
     <header>
@@ -36,11 +37,12 @@
       <div class="pagination">
         <ul></ul>
       </div>
+      <button onclick="scrollToTop()" id = "btnTop" title="Go to top"><span class="material-icons">north</span></button>
+      <button onclick="scrollToBottom()" id = "btnBottom" title="Go to bottom"><span class="material-icons">south</span></button>
     </section>
-
+    
     <footer>
       <h3>Pokédex</h3>
     </footer>
-    <!-- Javascript -->
   </body>
 </html>

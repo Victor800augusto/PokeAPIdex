@@ -2,7 +2,9 @@ const containerPagination = document.querySelector(".pagination ul");
 const container = document.querySelector("#container");
 const inputSearch = document.getElementById("inputSearch");
 const noResults = document.querySelector(".no-results");
-console.log(container.childNodes);
+const btnTop = document.getElementById("btnTop");
+const btnBottom = document.getElementById("btnBottom");
+
 const typeColors = [
   {
     type: "grass",
@@ -132,13 +134,11 @@ function searchPokemon(e) {
           searchArray.push(allPokemon[i]);
         }
       }
-      //
       if (searchArray.length == 0) {
         noResults.style.display = "block";
       } else {
         noResults.style.display = "none";
       }
-      //
       searchGetArray(searchArray);
     } else if (!isNaN(Number(e.target.value)) && e.target.value.length != 0) {
       let searchArray = [];
@@ -149,13 +149,11 @@ function searchPokemon(e) {
           searchArray.push(allPokemon[i]);
         }
       }
-      //
       if (searchArray.length == 0) {
         noResults.style.display = "block";
       } else {
         noResults.style.display = "none";
       }
-      //
       searchGetArray(searchArray);
     } else if (
       e.target.value.length == 0 ||
@@ -279,6 +277,10 @@ function sortPokemonBy(sortOrder, allPokemonList) {
 function scrollToTop() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
+}
+function scrollToBottom() {
+  console.log("test");
+  window.scrollTo(0, 10000);
 }
 
 function createPagination(totalPages, page) {
@@ -711,6 +713,23 @@ function getFormattedOptions(optionElements) {
       element: optionElement,
     };
   });
+}
+
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (
+    document.body.scrollTop > 100 ||
+    document.documentElement.scrollTop > 100
+  ) {
+    btnTop.style.display = "block";
+    btnBottom.style.display = "block";
+  } else {
+    btnTop.style.display = "none";
+    btnBottom.style.display = "none";
+  }
 }
 
 window.addEventListener("load", init());

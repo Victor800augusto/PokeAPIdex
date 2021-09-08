@@ -481,6 +481,32 @@ header {
 }
 /* Skeleton Loading styles end */
 
+/* Scroll Buttons */
+#btnTop,
+#btnBottom {
+  position: fixed;
+  display: none;
+  bottom: 20vh;
+  right: 5px;
+  border-radius: 50px;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 99;
+}
+#btnBottom {
+  bottom: 15vh;
+}
+#btnTop:hover,
+#btnBottom:hover {
+  background-color: #3466af;
+}
+#btnTop:hover span,
+#btnBottom:hover span {
+  color: #ffcb05;
+}
+/* End of Scroll Buttons */
+
 /* Footer */
 footer {
   margin-top: auto;
