@@ -250,7 +250,7 @@ header {
     line-height: 25px;
   }
 }
-@media (min-width: 385px) and (max-width: 470px) {
+@media (min-width: 385px) and (max-width: 500px) {
   .pagination ul li {
     font-size: 16px;
     line-height: 30px;
