@@ -486,7 +486,7 @@ header {
 #btnBottom {
   position: fixed;
   display: none;
-  bottom: 20vh;
+  bottom: 100px;
   right: 5px;
   border-radius: 50px;
   border: none;
@@ -495,7 +495,7 @@ header {
   z-index: 99;
 }
 #btnBottom {
-  bottom: 15vh;
+  bottom: 50px;
 }
 #btnTop:hover,
 #btnBottom:hover {

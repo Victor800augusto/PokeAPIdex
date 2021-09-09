@@ -279,7 +279,6 @@ function scrollToTop() {
   document.documentElement.scrollTop = 0;
 }
 function scrollToBottom() {
-  console.log("test");
   window.scrollTo(0, 10000);
 }
 
