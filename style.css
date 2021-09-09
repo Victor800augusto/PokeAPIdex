@@ -23,14 +23,14 @@ h1 {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #e73221;
-  color: #202124;
-  line-height: 1.5;
-  text-align: center;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  text-align: center;
+  background: #e73221;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #202124;
+  line-height: 1.5;
 }
 
 ul {
@@ -63,20 +63,21 @@ p {
   margin-bottom: 1.25rem;
   color: #202124;
 }
-
-/* Styles */
+/* End of Global Styles */
+/* General styles */
 header {
   padding-top: 18px;
 }
 .containerPokemon {
-  /* min-width: 400px; */
-  max-width: 1650px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 40px 50px 5px 50px;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
+  max-width: 1650px;
+  width: 100%;
+  padding: 40px 50px 5px 50px;
 }
+
+/* Filter and Search styles */
 .containerFilters {
   display: flex;
   justify-content: space-between;
@@ -94,48 +95,29 @@ header {
 }
 
 #inputSearch {
-  font-size: 16px;
   padding: 0.25rem 0.5rem;
   width: 100%;
+  font-size: 16px;
 }
-
-#pokemonOrder {
-  background-color: #313131;
-  color: #fff;
-  border-radius: 5px;
-  padding: 5px 10px;
-  align-self: flex-end;
-  font-size: 1.25rem;
-}
-
-#pokemonOrder:hover {
-  cursor: pointer;
-}
-
-#pokemonOrder option {
-  background-color: #616161;
-}
-#pokemonOrder option {
-  background-color: #616161;
-  cursor: pointer;
-}
+/* End of Filter and Search styles */
 
 #container {
-  width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-content: flex-start;
-  padding: 100px 50px;
+  gap: 50px;
   margin: 0 auto;
   margin-top: 20px;
-  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 100%;
   min-height: 800px;
-  gap: 50px;
+  padding: 100px 50px;
   background: #c2d6ed;
   box-shadow: 0 0 2em #c2d6ed;
   border-radius: 20px;
 }
 
+/* no-results search styles */
 .no-results {
   display: none;
   width: 100%;
@@ -149,7 +131,8 @@ header {
 .no-results p {
   font-weight: bold;
 }
-
+/* no-results search styles */
+/* General styles responsivity */
 @media (max-width: 650px) {
   .containerPokemon {
     padding: 20px 25px;
@@ -175,41 +158,43 @@ header {
     padding: 40px 15px;
   }
 }
+/* End of General styles responsivity */
+/* End of General styles */
 /* Pagination styles */
 
 .pagination {
-  max-width: 450px;
   margin: 20px auto;
+  max-width: 450px;
 }
 
 .pagination ul {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
   background: #fff;
   padding: 8px;
   border-radius: 50px;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.35);
 }
 .pagination ul li {
-  color: black;
   list-style: none;
+  color: black;
   line-height: 45px;
   text-align: center;
   font-size: 18px;
   font-weight: 500;
+  transition: all 0.3s ease;
   cursor: pointer;
   user-select: none;
-  transition: all 0.3s ease;
 }
 .pagination ul li.numb {
   list-style: none;
+  margin: 0 3px;
   height: 45px;
   width: 45px;
-  margin: 0 3px;
-  line-height: 45px;
   border-radius: 50%;
+  line-height: 45px;
 }
 .pagination ul li.numb.first {
   margin: 0px 3px 0 -5px;
@@ -271,12 +256,12 @@ header {
 }
 /* End of Pagination styles */
 
-/* Pokemon card */
+/* Pokemon card styles */
 
 .itemPokemon {
+  display: flex;
   flex-basis: calc(33% - 10px);
   flex-grow: 1;
-  display: flex;
   justify-content: flex-start;
   align-items: center;
   border-radius: 10px;
@@ -295,12 +280,12 @@ header {
   position: absolute;
   top: 0px;
   left: 0px;
-  font-weight: 600;
-  color: black;
   height: 25px;
   width: 38px;
   background-color: #f2f2f2;
   border-bottom-right-radius: 45%;
+  font-weight: 600;
+  color: black;
 }
 
 .imgContainer {
@@ -335,8 +320,8 @@ header {
 }
 
 .typePokemon {
-  flex-basis: 50%;
   display: inline-block;
+  flex-basis: 50%;
   padding: 2px 15px;
   border-radius: 5px;
 }
@@ -364,6 +349,7 @@ header {
     margin-bottom: 8px;
   }
 }
+/* End of Pokemon card styles */
 
 /* TypeStyles */
 
@@ -428,7 +414,7 @@ header {
   background-color: #399cff;
 }
 
-/* TypeStyles end*/
+/* TypeStyles end */
 
 /* Skeleton styles */
 
@@ -437,9 +423,9 @@ header {
 }
 
 .imgContainer.loading::before {
-  position: absolute;
-  content: "";
   display: inline-block;
+  content: "";
+  position: absolute;
   height: 60px;
   width: 60px;
   border-radius: 50%;
@@ -479,20 +465,20 @@ header {
     background-position: -100% 0;
   }
 }
-/* Skeleton Loading styles end */
+/* Skeleton styles end*/
 
-/* Scroll Buttons */
+/* Scroll Buttons Styles */
 #btnTop,
 #btnBottom {
-  position: fixed;
   display: none;
+  position: fixed;
   bottom: 100px;
   right: 5px;
+  padding: 5px;
+  z-index: 99;
   border-radius: 50px;
   border: none;
-  padding: 5px;
   cursor: pointer;
-  z-index: 99;
 }
 #btnBottom {
   bottom: 50px;
@@ -505,18 +491,20 @@ header {
 #btnBottom:hover span {
   color: #ffcb05;
 }
-/* End of Scroll Buttons */
+/* End of Scroll Buttons Styles */
 
-/* Footer */
+/* Footer styles */
 footer {
   margin-top: auto;
-  background: #1f1f1f;
   padding: 30px 60px;
+  background: #1f1f1f;
 }
 
 footer h3 {
   color: #fff;
 }
+/* End of Footer styles */
+
 /* DropDown styles */
 .custom-select-container,
 .custom-select-value,
@@ -526,11 +514,11 @@ footer h3 {
 }
 
 .custom-select-container {
+  display: inline-block;
+  align-self: flex-end;
+  position: relative;
   background-color: #5c5c5c;
   color: #fff;
-  align-self: flex-end;
-  display: inline-block;
-  position: relative;
 }
 
 .custom-select-value {
@@ -538,8 +526,8 @@ footer h3 {
   align-items: center;
   justify-content: space-between;
   width: 200px;
-  border: 1px solid black;
   padding: 0.25rem 0.5rem;
+  border: 1px solid black;
   cursor: pointer;
   user-select: none;
 }
@@ -550,26 +538,26 @@ footer h3 {
 }
 
 .custom-select-value::after {
-  content: "";
   display: inline-block;
-  border: 4px solid transparent;
-  border-top-color: black;
+  content: "";
   margin-left: 12px;
   margin-top: 4px;
+  border: 4px solid transparent;
+  border-top-color: black;
 }
 
 .custom-select-options {
-  z-index: 100;
-  background: #5c5c5c;
   display: none;
+  overflow-y: auto;
   position: absolute;
   padding: 0;
   margin: 0;
-  border: 2px solid black;
+  z-index: 100;
+  background: #5c5c5c;
   width: 100%;
+  border: 2px solid black;
   border-top: none;
   max-height: 200px;
-  overflow-y: auto;
 }
 
 .custom-select-options.show {
@@ -597,4 +585,4 @@ footer h3 {
     width: 100%;
   }
 }
-/*  */
+/* End of DropDown styles */

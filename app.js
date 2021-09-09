@@ -207,7 +207,6 @@ async function getArrayPokemon(currentPage, allPokemonList, sortOrder) {
 function sortPokemonBy(sortOrder, allPokemonList) {
   if (sortOrder == "lowestFirst") {
     lastOrder = "lowestFirst";
-    //
     createPagination(totalPages, 1);
     if (
       inputSearch.value.length == 0 ||
@@ -223,7 +222,6 @@ function sortPokemonBy(sortOrder, allPokemonList) {
   if (sortOrder == "highestFirst") {
     lastOrder = "highestFirst";
     createPagination(totalPages, 1);
-    //
     if (
       inputSearch.value.length == 0 ||
       (inputSearch.value.length < 3 && isNaN(inputSearch.value))
@@ -234,8 +232,6 @@ function sortPokemonBy(sortOrder, allPokemonList) {
       let allPokemonOrdered = allPokemonList.map((item) => item);
       return allPokemonOrdered.reverse();
     }
-
-    //
   }
   if (sortOrder == "alphabetAZ") {
     lastOrder = "alphabetAZ";
@@ -446,12 +442,9 @@ function addSkeleton(div) {
   skeletonName.classList.add("namePokemon", "loading");
   let skeletonType = document.createElement("div");
   skeletonType.classList.add("containerTypePokemon", "loading");
-  div.append(skeletonImgContainer);
+  div.append(skeletonImgContainer, skeletonData);
   skeletonImgContainer.append(skeletonImg);
-  div.append(skeletonData);
-  skeletonData.append(skeletonSpan);
-  skeletonData.append(skeletonName);
-  skeletonData.append(skeletonType);
+  skeletonData.append(skeletonSpan, skeletonName, skeletonType);
 }
 
 async function orderPokemon(arrayPokemonData) {
