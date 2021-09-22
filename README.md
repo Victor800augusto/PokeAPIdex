@@ -38,8 +38,12 @@ As most projects, i had problems that helped me improve, such as the lack of cle
 <p>
 I also had problems with asynchronous code and the usage of git, solving them helped me to understand and improve the usage of them.
 </p>
-
-<img alt="Project screenshot " src="./docs/project.png" width="500px">
+<div align="center">
+<img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263945-8995d107-4f22-45c0-9980-343f7650d4ed.gif">
+</div>
+<img alt="Desktop version screenshot " src="https://user-images.githubusercontent.com/44837396/134262290-d70545fd-c6b0-420b-b437-4afa3ddbe24c.png">
+<img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263618-666cb2cd-29af-48bf-9a28-97f9603dda50.png" width="400px">
+<img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263794-363b7c7d-2c46-456b-bf50-6c4c01b1c29c.png" width="400px">
 
 ### Features
 
