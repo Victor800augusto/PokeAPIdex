@@ -29,21 +29,23 @@
 ## 💻 About the project
 
 <p>
-This project was made with the objective of learning and practicing more about web development, it was my first time using API and with this project i had acquired experience on how to manage an API,
-improve my skills with responsive design and learn the importance of the debounce technic which helped me with my search function.
+    This project was made with the objective of learning and practicing more about web development, it was my first time using API and with this project i had acquired experience on how to manage an API,
+    improve my skills with responsive design and learn the importance of the debounce technic which helped me with my search function.
 </p>
 <p>
-As most projects, i had problems that helped me improve, such as the lack of clean code that gave me a lot of issues, after giving my functions single responsibility it solved and prevented most of those problems.
+    As most projects, i had problems that helped me improve, such as the lack of clean code that gave me a lot of issues, after giving my functions single responsibility it solved and prevented most of those problems.
 </p>
 <p>
-I also had problems with asynchronous code and the usage of git, solving them helped me to understand and improve the usage of them.
+    I also had problems with asynchronous code and the usage of git, solving them helped me to understand and improve the usage of them.
 </p>
 <div align="center">
-<img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263945-8995d107-4f22-45c0-9980-343f7650d4ed.gif">
+    <img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263945-8995d107-4f22-45c0-9980-343f7650d4ed.gif">
 </div>
 <img alt="Desktop version screenshot " src="https://user-images.githubusercontent.com/44837396/134262290-d70545fd-c6b0-420b-b437-4afa3ddbe24c.png">
-<img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263618-666cb2cd-29af-48bf-9a28-97f9603dda50.png" width="400px">
-<img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263794-363b7c7d-2c46-456b-bf50-6c4c01b1c29c.png" width="400px">
+<div align="center">
+    <img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263618-666cb2cd-29af-48bf-9a28-97f9603dda50.png" width="400px">
+    <img alt="Mobile version screenshot " src="https://user-images.githubusercontent.com/44837396/134263794-363b7c7d-2c46-456b-bf50-6c4c01b1c29c.png" width="400px">
+</div>
 
 ### Features
 
